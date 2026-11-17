@@ -15,32 +15,32 @@ format:
     css: pages/styles.css
 ---
 
-## 📚 Course Overview
+## Course Overview
 
 This repository contains practical exercises for the BIO512 course at University of Gothenburg. Use the navbar to navigate to the different sections.
 
 ### 🧬 Transcriptomics 
 
 - DESeq2 workflow:
-  - [Practical: DESeq2 Analysis](practicals/PRACTICALS-DESeq/PRACTICAL_DESEQ_ANALYSIS.qmd)
-  - [Practical: Data Grouping and Visualisation](practicals/PRACTICALS-DESeq/PRACTICAL_DESEQ_ADVANCED.qmd)
+  - [[LOCKED] Practical: DESeq2 Analysis](practicals/PRACTICALS-DESeq/PRACTICAL_DESEQ_ANALYSIS.qmd)
+  - [[LOCKED] Practical: Data Grouping and Visualisation](practicals/_PRACTICALS-DESeq/PRACTICAL_DESEQ_ADVANCED.qmd)
 - Network analysis:
-  - [Practical: Network visualisation and Centrality analysis](practicals/PRACTICALS-Network_Visualisation/PRACTICAL_NETWORK_ANALYSIS.qmd)
+  - [[LOCKED] Practical: Network visualisation and Centrality analysis](practicals/PRACTICALS-Network_Visualisation/_PRACTICAL_NETWORK_ANALYSIS.qmd)
 
 ### 🤖 Machine Learning
 
 - Peptide classification in Scikit-Learn:
-  - [Practical: Peptide Classification with ML](practicals/PRACTICALS-Peptide_Classification/PRACTICAL_PEPTIDE_CLASSIFICATION_ML.qmd)
+  - [[LOCKED] Practical: Peptide Classification with ML](practicals/PRACTICALS-Peptide_Classification/_PRACTICAL_PEPTIDE_CLASSIFICATION_ML.qmd)
 
 ### 🧫 Protein Structure and Modeling
 
 - Structure analysis (YASARA):
-  - [Practical: Protein Complex Structure Analysis](practicals/PRACTICALS-Structure_Prediction/PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.qmd)
+  - [[LOCKED] Practical: Protein Complex Structure Analysis](practicals/PRACTICALS-Structure_Prediction/_PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.qmd)
 - Structure prediction:
-  - [Practical: AlphaFold3 Prediction](practicals/PRACTICALS-Structure_Prediction/PRACTICAL_ALPHAFOLD3_PREDICTION.qmd)
+  - [[LOCKED] Practical: AlphaFold3 Prediction](practicals/PRACTICALS-Structure_Prediction/_PRACTICAL_ALPHAFOLD3_PREDICTION.qmd)
 - Docking and MD:
-  - [Practical: Molecular Docking](practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MOLECULAR_DOCKING.qmd)
-  - [Practical: MD Analysis](practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MD_ANALYSIS.qmd)
+  - [[LOCKED] Practical: Molecular Docking](practicals/PRACTICALS-Structure_Prediction/_PRACTICAL_MOLECULAR_DOCKING.qmd)
+  - [[LOCKED] Practical: MD Analysis](practicals/PRACTICALS-Structure_Prediction/_PRACTICAL_MD_ANALYSIS.qmd)
 
 ### 🛠️ Computer Setup
 

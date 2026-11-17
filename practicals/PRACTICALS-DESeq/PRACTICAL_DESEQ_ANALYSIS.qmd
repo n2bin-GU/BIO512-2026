@@ -7,7 +7,6 @@ format:
   html:
     toc: true
     toc-depth: 3
-    number-sections: true
     code-fold: false
     theme:
       light: cosmo
@@ -16,7 +15,7 @@ format:
 
 # Introduction
 
-In this practical, you will perform differential expression analysis using PyDESeq2, explore the data structure with PCA, and interpret results via GO Biological Process enrichment. You will work from the count data we generated in the previous practical, but double check that it matches the data provided. If it doesnt match or you dont have it, you can use the provided counts.tsv.
+In this practical, you will perform differential expression analysis using PyDESeq2, explore the data structure with PCA, and interpret results via GO enrichment. You will work from the count data we generated in the previous practical, but double check that it matches the data provided. If it doesnt match or you dont have it, you can use the provided counts.tsv.
 
 Ensure these files are in your working directory before starting the analysis (some need to be copied in).
 
@@ -26,12 +25,9 @@ Ensure these files are in your working directory before starting the analysis (s
 ::: {.callout-important}
 ## Setup Instructions
 ```bash
-mkdir -p ~/BIO512/DESeq_lab
-cd ~/BIO512/DESeq_lab
-
 # Required files can be fetched from the Cluster
-scp -r <your_vera_username>@vera2.chalmers.se:/cephyr/NOBACKUP/groups/n2bin_gu/BIO512/practicals/DeSeq/* ~/BIO512/DESeq_lab
-cd ~/BIO512/DESeq_lab
+scp -r <your_vera_username>@vera2.chalmers.se:/cephyr/NOBACKUP/groups/n2bin_gu/BIO512/practicals/DeSeq/* ~/path/to/DESeq_lab
+cd ~/path/to/DESeq_lab
 
 # Build the conda environment needed from the provided environment file
 conda env create --file="./env/env.yml"
@@ -134,13 +130,8 @@ results = model.{__}
 fig, ax = {__}
 ```
 
-## Questions:
-
-- **Q2: What is your interpretation of the PCA analysis? Is there any outliers? Justify your opinion.**
-- **Q3: Is the plot title total variant same as the PC1 + PC2 explained variant? If not, why?**
-
 ::: {.callout-tip}
-### PCA Cheatsheet:
+### PCA plotting Cheatsheet:
 1. model.scatter3d() --> 3D PCA plotting
 2. model.biplot() --> Plotting top loading factors (model.biplot3d for 3D PCA)
 3. Explore "model.results" for detailed information of the PCA model, including "explained_var", "variance_ratio", "loadings", etc
@@ -150,9 +141,9 @@ More info: https://erdogant.github.io/pca/pages/html/index.html
 
 # Statistical Analysis: DESeq2  
 
-To identify differentially expressed genes (DEGs) between infected and normal samples, we applied **DESeq2 methodology**. DESeq2 is a widely used statistical framework for RNA-seq data analysis, based on modeling count data with negative binomial distributions. It provides robust normalization, variance estimation, and statistical testing to identify genes whose expression is significantly associated with the experimental condition.  
+To identify differentially expressed genes (DEGs) between infected and normal samples, we apply **DESeq2 methodology**. DESeq2 is a widely used statistical framework for RNA-seq data analysis, based on modeling count data with negative binomial distributions. It provides robust normalization, variance estimation, and statistical testing to identify genes whose expression is significantly associated with the experimental condition.  
 
-In this analysis, we make use of **PyDESeq2**, a Python implementation of the DESeq2 workflow. This allows us to perform the entire statistical analysis in Python while maintaining compatibility with the established DESeq2 methods.  
+In this analysis, we make use of **PyDESeq2**, a Python implementation of the DESeq2 workflow from R. This allows us to perform the entire statistical analysis in Python while maintaining compatibility with the established DESeq2 methods.  
 
 https://pydeseq2.readthedocs.io/en/stable/
 
@@ -237,13 +228,6 @@ notna_deseq = {__}
 notna_deseq.shape
 ```
 
-## Questions:
-
-- **Q4: How many significantly differentially expressed genes in this comparison? (padj < 0.05)**
-- **Q5: What does the histogram tell you? Looking at the MA plot, approximately what are your highest and lowest Foldchanges?**
-- **Q6: How many genes with a p-adjusted value of NA did you have?**
-- **Q7: What is the top 5 most significantly differentially expressed genes based on their log2FoldChange? (padj < 0.05)Look for their gene names using online tools (e.g. ENSG00000166211 is SPIC).**
-
 ::: {.callout-tip}
 Remember: There are up and down-regulated genes, make sure that you sort it based on their absolute values. Hint: .sort_values("log2FoldChange", key = abs)
 :::
@@ -263,7 +247,7 @@ notna_deseq[notna_deseq["padj"] < 0.05].to_csv("Deseq2_Results.txt", sep = "\t")
 pd.DataFrame(dds.layers["normed_counts"], columns = dds.var_names, index=dds.obs_names).T.to_csv("Deseq2_NormalizedCount.txt", sep = "\t")
 ```
 
-# Enrichment Analysis: GO Biological Process  
+# Enrichment Analysis: GO-terms
 
 To gain functional insight into the differentially expressed genes (DEGs), we performed a **Gene Ontology (GO) enrichment analysis**, focusing on the **Biological Process (BP)** category. This analysis identifies biological pathways and processes that are statistically overrepresented among the DEGs compared to what would be expected by chance.  
 
@@ -374,21 +358,67 @@ ax = {__}
 ax = {__}
 ```
 
-## Questions:
-
-- **Q8: How many significantly enriched processes for up- and down-regulated genes? (Adjusted P-value < 0.11, arbitrary cut off)**
-- **Q9: What does "Combined Score" mean? Check https://maayanlab.cloud/Enrichr/help#basics**
-- **Q10: What are the genes associated with the process with the highest combined score in each direction?**
-- **Q11: What are the top 10 enriched processes for the up- and down-regulated genes? Include a figure for each direction.**
-
 ---
 
-:::{.callout-important}
-# Things to append to your submission
+::: {.callout-note collapse="true"}
+## Code solutions
 
-- Save your notebook as PRACTICAL_DESEQ_ANALYSIS_yourname.ipynb
-- Add answers to the questions in separate markdown cells
-- Add your code blocks from the jupyter notebook with completed code where the placeholders were 
-- Include some output cells with figures (if multiple runs are needed, keep only the last one)
+```python
+count = pd.read_csv("counts.tsv", sep = "\t", index_col = 0)
+metadata = pd.read_csv("metadata.txt", sep = "\t", index_col = 0)
+```
+
+```python
+# Setting up the dataframe for analysis
+## 1. Remove the all zero genes from our count file, by keeping only the rows with total sum greater than 0. Assign it to "count_PCA".
+count_PCA = count[count.sum(1) > 0]
+
+## 2. Replace the sample ID to their conditions (normal or infected)
+### 2.1. we make sure that the sample sequence in the count file is the same with metadata (Yes it is in this example, but it is not going to always be like that :D)
+count_PCA = count_PCA[metadata.index]
+
+### 2.2. replacing the column names with their metadata["Conditions"] column
+count_PCA.columns = metadata["Conditions"]
+
+## PS: There is a more pythonic way to replace the column names:
+# count_PCA = count_PCA.rename(columns = metadata["Conditions"])
+
+## 3. Log-transform the count_PCA. Read about "log1p" function from numpy, what does it mean?
+count_PCA = np.log1p(count_PCA)
+```
+
+```python
+results = model.fit_transform(count_PCA.T)
+
+fig, ax = model.scatter(figsize = (6,5))
+```
+
+```python
+notna_deseq = deseq_results[deseq_results["padj"].notna()]
+notna_deseq.shape
+``` 
+
+```python
+up = significant_deseq[significant_deseq["log2FoldChange"] > 0]["Gene name"].to_list()
+down = significant_deseq[significant_deseq["log2FoldChange"] < 0]["Gene name"].to_list()
+```
+
+```python
+enr_up = gp.enrichr(gene_list=up, 
+                 gene_sets='GO_Biological_Process_2025',
+                 organism='human', # don't forget to set organism to the one you desired! e.g. Yeast
+                 outdir=None, # don't write to disk
+                )
+
+enr_down = gp.enrichr(gene_list=down, # or "./tests/data/gene_list.txt",
+                 gene_sets='GO_Biological_Process_2025',
+                 organism='human', # don't forget to set organism to the one you desired! e.g. Yeast
+                 outdir=None, # don't write to disk
+                )
+```
+
+```python
+ax = gp.dotplot(enr_up.res2d, title='GO BP',cmap='viridis_r', size=10, figsize=(3,5), cutoff=1)
+```
+
 :::
-
