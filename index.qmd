@@ -2,7 +2,7 @@
 title: "BIO512 Transcriptomics and Protein Structure Analysis - Practical Repository"
 subtitle: "Welcome to the practical exercises for BIO512"
 author: "Tor Kling"
-date: November 10, 2025
+date: November 10, 2026
 format: 
   html:
     toc: true
@@ -22,8 +22,8 @@ This repository contains practical exercises for the BIO512 course at University
 ### 🧬 Transcriptomics 
 
 - DESeq2 workflow:
-  - [[LOCKED] Practical: DESeq2 Analysis](practicals/PRACTICALS-DESeq/PRACTICAL_DESEQ_ANALYSIS.qmd)
-  - [[LOCKED] Practical: Data Grouping and Visualisation](practicals/_PRACTICALS-DESeq/PRACTICAL_DESEQ_ADVANCED.qmd)
+  - [Practical: DESeq2 Analysis](practicals/PRACTICALS-DESeq/PRACTICAL_DESEQ_ANALYSIS.qmd)
+  - [Practical: Data Grouping and Visualisation](practicals/_PRACTICALS-DESeq/PRACTICAL_DESEQ_ADVANCED.qmd)
 - Network analysis:
   - [[LOCKED] Practical: Network visualisation and Centrality analysis](practicals/PRACTICALS-Network_Visualisation/_PRACTICAL_NETWORK_ANALYSIS.qmd)
 

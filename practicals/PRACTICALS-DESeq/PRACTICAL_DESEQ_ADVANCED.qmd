@@ -2,7 +2,7 @@
 title: "Data Grouping and Visualization"
 subtitle: "BIO512 Transcriptomics – Advanced PCA and Sample Correlation"
 author: "Muhammad Arif"
-date: November 10, 2025
+date: November 10, 2026
 format:
   html:
     toc: true
@@ -24,10 +24,25 @@ This companion to the DeSeq practical focuses on grouping, advanced PCA using DE
 
 Now we will redo PCA using only the differentially expressed (DE) genes identified in the previous DESeq analysis. This approach often enhances the separation between experimental groups by focusing on the most informative features.
 
-## Questions
+```python
+# Collect significantly DE genes (padj < 0.05, non-NA)
+sig_gene_ids = {__}
 
-- **Q12: Do you see any improvement in the separation of the Normal and Infected group? What variable(s) that you observe?**
-- **Q13: Explain what is "loading" in PCA. Identify top-loading (best performing features) separating Normal and Infected groups. (hint: https://erdogant.github.io/pca/pages/html/Algorithm.html#loadings)**
+# Subset original raw counts to DE genes
+count_DE = count.loc[sig_gene_ids]
+
+# Prepare matrix analogous to earlier PCA (rename samples to conditions, log1p transform)
+count_DE_PCA = {__}
+count_DE_PCA.columns = {__}
+count_DE_PCA = [__]
+
+# Run PCA with 3 components
+model_de = pca(n_components=3)
+results_de = model_de.fit_transform(count_DE_PCA.T)
+
+# Plot
+fig_de, ax_de = model_de.scatter(figsize=(6,5))
+```
 
 ---
 
@@ -58,20 +73,38 @@ Suggestion: use "cmap = 'RdYlBu'" to have better color map
 sns.clustermap({__})
 ```
 
-## Questions:
-
-- **Q14: What do you conclude from the clustering, do the PCA and the heatmap reflect eachother? Are there any sample outliers?**
-- **Q15: Can you identify which correlation method that you use?**
-
 ::: {.callout-tip}
 (hint: read https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.corr.html)
 :::
 
 ---
 
-# Things to append to your submission
+::: {.callout-tip collapse="true"}
+## Code solutions
 
-- Save your notebook as PRACTICAL_DESEQ_ADVANCED_yourname.ipynb
-- Add answers to the questions in separate markdown cells
-- Add your code blocks from the jupyter notebook with completed code where the placeholders were 
-- Include some output cells with figures (if multiple runs are needed, keep only the last one)
+```python
+# Collect significantly DE genes (padj < 0.05, non-NA)
+sig_gene_ids = notna_deseq[notna_deseq["padj"] < 0.05].index
+
+# Subset original raw counts to DE genes
+count_DE = count.loc[sig_gene_ids]
+
+# Prepare matrix analogous to earlier PCA (rename samples to conditions, log1p transform)
+count_DE_PCA = count_DE[metadata.index]
+count_DE_PCA.columns = metadata["Conditions"]
+count_DE_PCA = np.log1p(count_DE_PCA)
+
+# Run PCA with 3 components
+model_de = pca(n_components=3)
+results_de = model_de.fit_transform(count_DE_PCA.T)
+
+# Plot
+fig_de, ax_de = model_de.scatter(figsize=(6,5))
+```
+
+```python
+corr = count_PCA.corr()
+sns.clustermap(corr, cmap='RdYlBu')
+```
+
+:::

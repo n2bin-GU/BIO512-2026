@@ -18,25 +18,25 @@ website:
           - text: "Advanced PCA & Correlation"
             href: "practicals/PRACTICALS-DESeq/PRACTICAL_DESEQ_ADVANCED.qmd"
           - text: "Network Analysis"
-            href: "practicals/PRACTICALS-Network_Visualisation/PRACTICAL_NETWORK_ANALYSIS.qmd"
+            href: "practicals/PRACTICALS-Network_Visualisation/_PRACTICAL_NETWORK_ANALYSIS.qmd"
       - text: "Structure & Modeling"
         menu:
           - text: "Protein Complex Structure Analysis"
-            href: "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.qmd"
+            href: "practicals/PRACTICALS-Structure_Prediction/_PRACTICAL_PROTEIN_STRUCTURE_ANALYSIS.qmd"
           - text: "AlphaFold3 Prediction"
             href: "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_ALPHAFOLD3_PREDICTION.qmd"
           - text: "Molecular Docking"
-            href: "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MOLECULAR_DOCKING.qmd"
+            href: "practicals/PRACTICALS-Structure_Prediction/_PRACTICAL_MOLECULAR_DOCKING.qmd"
           - text: "MD Analysis"
-            href: "practicals/PRACTICALS-Structure_Prediction/PRACTICAL_MD_ANALYSIS.qmd"
+            href: "practicals/PRACTICALS-Structure_Prediction/_PRACTICAL_MD_ANALYSIS.qmd"
       - text: "Machine Learning"
-        href: "practicals/PRACTICALS-Peptide_Classification/PRACTICAL_PEPTIDE_CLASSIFICATION_ML.qmd"
+        href: "practicals/PRACTICALS-Peptide_Classification/_PRACTICAL_PEPTIDE_CLASSIFICATION_ML.qmd"
       - text: "Computer Setup"
         menu:
           - text: "Personal Computer Setup"
-            href: "setup/Pre-course-setup_n2bin.qmd"
+            href: "setup/_Pre-course-setup_n2bin.qmd"
           - text: "HPC Setup"
-            href: "setup/Set_up_the_HPC.qmd"
+            href: "setup/_Set_up_the_HPC.qmd"
 
 format:
   html:

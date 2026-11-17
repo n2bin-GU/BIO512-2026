@@ -2,7 +2,7 @@
 title: "Differential Expression and Enrichment Analysis"
 subtitle: "BIO512 Transcriptomics – PyDESeq2, PCA, and GO BP Enrichment"
 author: "Muhammad Arif"
-date: November 10, 2025
+date: November 10, 2026
 format:
   html:
     toc: true
@@ -26,7 +26,7 @@ Ensure these files are in your working directory before starting the analysis (s
 ## Setup Instructions
 ```bash
 # Required files can be fetched from the Cluster
-scp -r <your_vera_username>@vera2.chalmers.se:/cephyr/NOBACKUP/groups/n2bin_gu/BIO512/practicals/DeSeq/* ~/path/to/DESeq_lab
+scp -r <your_vera_username>@vera2.chalmers.se:/cephyr/NOBACKUP/groups/n2bin_gu/BIO512_2026/DESeq/* ~/path/to/DESeq_lab
 cd ~/path/to/DESeq_lab
 
 # Build the conda environment needed from the provided environment file
@@ -37,12 +37,15 @@ conda activate BIO512_v1
 ipython kernel install --user --name=BIO512_v1
 
 # Launch Jupyter Lab or run the notebook in VScode
+```
 
+::: {.callout-note}
 # For any excersise that has a {__}, this is a placeholder that you need to fill in with appropriate code.
 myvariable = {__}
 # should be replaced with actual code.
 myvariable = "Hello, World!"
-```
+:::
+
 :::
 
 ---
@@ -64,9 +67,6 @@ count = pd.read_csv("counts.tsv", sep = "\t")
 # Load the metadata, tab separated
 metadata = pd.read_csv("metadata.txt", sep = "\t")
 ```
-
-- **Q1: How many genes and samples do you have in your matrix?**
-
 # Exploratory Data Analysis: PCA
 
 Before performing downstream statistical tests, it is important to explore the overall structure of the data. EDA is an incredibly useful dogma in data analysis, using the data itself to plot and visualize relationships that will guide downstream analysis. It is a great way to get to know your data in depth and identify potential issues or interesting patterns. Principal Component Analysis (PCA) is a common dimensionality reduction technique that allows us to visualize high-dimensional gene expression data in just two or three dimensions. This helps us to:
@@ -360,7 +360,7 @@ ax = {__}
 
 ---
 
-::: {.callout-note collapse="true"}
+::: {.callout-tip collapse="true"}
 ## Code solutions
 
 ```python
