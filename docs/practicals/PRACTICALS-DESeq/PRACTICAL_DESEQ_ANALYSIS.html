@@ -375,18 +375,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
-  <li><a href="#load-count-data" id="toc-load-count-data" class="nav-link" data-scroll-target="#load-count-data"><span class="header-section-number">2</span> Load Count Data</a></li>
-  <li><a href="#exploratory-data-analysis-pca" id="toc-exploratory-data-analysis-pca" class="nav-link" data-scroll-target="#exploratory-data-analysis-pca"><span class="header-section-number">3</span> Exploratory Data Analysis: PCA</a>
+  <li><a href="#initialize-python-environment" id="toc-initialize-python-environment" class="nav-link" data-scroll-target="#initialize-python-environment"><span class="header-section-number">2</span> Initialize Python Environment</a></li>
+  <li><a href="#load-count-data" id="toc-load-count-data" class="nav-link" data-scroll-target="#load-count-data"><span class="header-section-number">3</span> Load Count Data</a></li>
+  <li><a href="#exploratory-data-analysis-pca" id="toc-exploratory-data-analysis-pca" class="nav-link" data-scroll-target="#exploratory-data-analysis-pca"><span class="header-section-number">4</span> Exploratory Data Analysis: PCA</a>
   <ul class="collapse">
-  <li><a href="#steps" id="toc-steps" class="nav-link" data-scroll-target="#steps"><span class="header-section-number">3.1</span> Steps</a></li>
+  <li><a href="#steps" id="toc-steps" class="nav-link" data-scroll-target="#steps"><span class="header-section-number">4.1</span> Steps</a></li>
   </ul></li>
-  <li><a href="#statistical-analysis-deseq2" id="toc-statistical-analysis-deseq2" class="nav-link" data-scroll-target="#statistical-analysis-deseq2"><span class="header-section-number">4</span> Statistical Analysis: DESeq2</a>
+  <li><a href="#statistical-analysis-deseq2" id="toc-statistical-analysis-deseq2" class="nav-link" data-scroll-target="#statistical-analysis-deseq2"><span class="header-section-number">5</span> Statistical Analysis: DESeq2</a>
   <ul class="collapse">
-  <li><a href="#steps-1" id="toc-steps-1" class="nav-link" data-scroll-target="#steps-1"><span class="header-section-number">4.1</span> Steps:</a></li>
+  <li><a href="#steps-1" id="toc-steps-1" class="nav-link" data-scroll-target="#steps-1"><span class="header-section-number">5.1</span> Steps:</a></li>
   </ul></li>
-  <li><a href="#enrichment-analysis-go-terms" id="toc-enrichment-analysis-go-terms" class="nav-link" data-scroll-target="#enrichment-analysis-go-terms"><span class="header-section-number">5</span> Enrichment Analysis: GO-terms</a>
+  <li><a href="#enrichment-analysis-go-terms" id="toc-enrichment-analysis-go-terms" class="nav-link" data-scroll-target="#enrichment-analysis-go-terms"><span class="header-section-number">6</span> Enrichment Analysis: GO-terms</a>
   <ul class="collapse">
-  <li><a href="#steps-2" id="toc-steps-2" class="nav-link" data-scroll-target="#steps-2"><span class="header-section-number">5.1</span> Steps</a></li>
+  <li><a href="#steps-2" id="toc-steps-2" class="nav-link" data-scroll-target="#steps-2"><span class="header-section-number">6.1</span> Steps</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -474,22 +475,54 @@ For any excersise that has a {__}, this is a placeholder that you need to fill i
 </div>
 <hr>
 </section>
-<section id="load-count-data" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Load Count Data</h1>
+<section id="initialize-python-environment" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Initialize Python Environment</h1>
+<p>We start by importing the necessary Python libraries for data handling, visualization, and PCA analysis.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Adding these 4 lines will make our life easier if we need </span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># to do figure post-processing in other software</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>sns.<span class="bu">set</span>(font<span class="op">=</span><span class="st">"Arial"</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>sns.set_style(<span class="st">"white"</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>matplotlib.rcParams[<span class="st">'pdf.fonttype'</span>] <span class="op">=</span> <span class="dv">42</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>matplotlib.rcParams[<span class="st">'ps.fonttype'</span>] <span class="op">=</span> <span class="dv">42</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pydeseq2.dds <span class="im">import</span> DeseqDataSet</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pydeseq2.default_inference <span class="im">import</span> DefaultInference</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pydeseq2.ds <span class="im">import</span> DeseqStats</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pca <span class="im">import</span> pca</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pybiomart <span class="im">import</span> Dataset</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA <span class="im">as</span> sklearnPCA</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, math</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>os.environ[<span class="st">'KMP_DUPLICATE_LIB_OK'</span>]<span class="op">=</span><span class="st">'True'</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pickle</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> zscore, spearmanr</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gseapy <span class="im">as</span> gp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="load-count-data" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Load Count Data</h1>
 <p>We begin by importing the raw data into Python for downstream analysis. The count and metadata was those generated in the previous exercises. The dataset consists of two files:</p>
 <ol type="1">
 <li><p>Count file – This file contains the raw gene expression counts. Each row corresponds to a gene, and each column corresponds to a sample (identified by its sample ID).</p></li>
 <li><p>Metadata file – This file provides the experimental information for each sample, including the sample ID, condition (normal vs.&nbsp;infected), and replicate number.</p></li>
 </ol>
 <p>We load both files into pandas DataFrames for easier handling</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the count data, tab separated</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>count <span class="op">=</span> pd.read_csv(<span class="st">"counts.tsv"</span>, sep <span class="op">=</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the metadata, tab separated</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>metadata <span class="op">=</span> pd.read_csv(<span class="st">"metadata.txt"</span>, sep <span class="op">=</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the count data, tab separated</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>count <span class="op">=</span> pd.read_csv(<span class="st">"counts.tsv"</span>, sep <span class="op">=</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the metadata, tab separated</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>metadata <span class="op">=</span> pd.read_csv(<span class="st">"metadata.txt"</span>, sep <span class="op">=</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="exploratory-data-analysis-pca" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Exploratory Data Analysis: PCA</h1>
+<section id="exploratory-data-analysis-pca" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Exploratory Data Analysis: PCA</h1>
 <p>Before performing downstream statistical tests, it is important to explore the overall structure of the data. EDA is an incredibly useful dogma in data analysis, using the data itself to plot and visualize relationships that will guide downstream analysis. It is a great way to get to know your data in depth and identify potential issues or interesting patterns. Principal Component Analysis (PCA) is a common dimensionality reduction technique that allows us to visualize high-dimensional gene expression data in just two or three dimensions. This helps us to:</p>
 <ol type="1">
 <li>Identify major sources of variation in the dataset.</li>
@@ -503,12 +536,12 @@ For any excersise that has a {__}, this is a placeholder that you need to fill i
 <li><p>By retaining enough components to explain X% of the variance (95% for this example, maximum 1 aka 100%) <code>model = pca(n_components=0.95)</code></p></li>
 <li><p>By limiting the number of principal components (3 PCs in this example, to allow for 3D visualizaiton if needed) <code>model = pca(n_components=3)</code></p></li>
 </ol>
-<section id="steps" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="steps"><span class="header-section-number">3.1</span> Steps</h2>
+<section id="steps" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="steps"><span class="header-section-number">4.1</span> Steps</h2>
 <ol type="1">
 <li>Let’s use the 2nd initialization method, limiting the PCs to 3</li>
 </ol>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> pca(n_components<span class="op">=</span>{__})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> pca(n_components<span class="op">=</span>{__})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="2" type="1">
 <li>Setting up the dataframe for analysis
 <ol type="1">
@@ -520,28 +553,28 @@ For any excersise that has a {__}, this is a placeholder that you need to fill i
 <li>Log-transform the count_PCA. Read about “log1p” function from numpy, what does it mean?</li>
 </ol></li>
 </ol>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Setting up the dataframe for analysis</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">## 1. Remove the all zero genes from our count file, by keeping only the rows with total sum greater than 0. Assign it to "count_PCA".</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>count_PCA <span class="op">=</span> count[{__}]</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">## 2. Replace the sample ID to their conditions (normal or infected)</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">### 2.1. we make sure that the sample sequence in the count file is the same with metadata (Yes it is in this example, but it is not going to always be like that :D)</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>count_PCA <span class="op">=</span> count_PCA[metadata.index]</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">### 2.2. replacing the column names with their metadata["Conditions"] column</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>count_PCA.columns <span class="op">=</span> {__}</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">## 3. Log-transform the count_PCA. Read about "log1p" function from numpy, what does it mean?</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>count_PCA <span class="op">=</span> {__}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Setting up the dataframe for analysis</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">## 1. Remove the all zero genes from our count file, by keeping only the rows with total sum greater than 0. Assign it to "count_PCA".</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>count_PCA <span class="op">=</span> count[{__}]</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">## 2. Replace the sample ID to their conditions (normal or infected)</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">### 2.1. we make sure that the sample sequence in the count file is the same with metadata (Yes it is in this example, but it is not going to always be like that :D)</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>count_PCA <span class="op">=</span> count_PCA[metadata.index]</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">### 2.2. replacing the column names with their metadata["Conditions"] column</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>count_PCA.columns <span class="op">=</span> {__}</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">## 3. Log-transform the count_PCA. Read about "log1p" function from numpy, what does it mean?</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>count_PCA <span class="op">=</span> {__}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="3" type="1">
 <li>Perform the PCA analysis, on logged data using model.fit_transform() function (Note: This package requires gene names as the column names and the sample ID as the row names, so we have to transpose our dataframe (.T in the end))</li>
 </ol>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> model.{__}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> model.{__}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="4" type="1">
 <li>Plot the PCA analysis with a scatter plot (Note: figsize option is to limit the dimension of the plot. Can be adjusted to fit your preference. Play around with it.)</li>
 </ol>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> {__}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> {__}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -562,8 +595,8 @@ PCA plotting Cheatsheet:
 </div>
 </section>
 </section>
-<section id="statistical-analysis-deseq2" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Statistical Analysis: DESeq2</h1>
+<section id="statistical-analysis-deseq2" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Statistical Analysis: DESeq2</h1>
 <p>To identify differentially expressed genes (DEGs) between infected and normal samples, we apply <strong>DESeq2 methodology</strong>. DESeq2 is a widely used statistical framework for RNA-seq data analysis, based on modeling count data with negative binomial distributions. It provides robust normalization, variance estimation, and statistical testing to identify genes whose expression is significantly associated with the experimental condition.</p>
 <p>In this analysis, we make use of <strong>PyDESeq2</strong>, a Python implementation of the DESeq2 workflow from R. This allows us to perform the entire statistical analysis in Python while maintaining compatibility with the established DESeq2 methods.</p>
 <p>https://pydeseq2.readthedocs.io/en/stable/</p>
@@ -583,40 +616,40 @@ PCA plotting Cheatsheet:
 </ol>
 <p>Before executing the deseq2() function, we have to prepare the input object (lets call it dds, Deseq Data Set). If you inspect the help pages, there are several arguments that we could use. For this particular exercise it would be just enough to use the default values.</p>
 <p>Extract the results using the results() function into an object called res and have a look.</p>
-<section id="steps-1" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="steps-1"><span class="header-section-number">4.1</span> Steps:</h2>
+<section id="steps-1" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="steps-1"><span class="header-section-number">5.1</span> Steps:</h2>
 <ol type="1">
 <li>Create dds object. Use the original unfiltered count and metadata variables. For the design option, let’s use the “Conditions” column on metadata</li>
 </ol>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>dds <span class="op">=</span> DeseqDataSet(</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    counts<span class="op">=</span>count.T,</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    metadata<span class="op">=</span>metadata,</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    design<span class="op">=</span><span class="st">"~Conditions"</span>,</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    refit_cooks<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>dds <span class="op">=</span> DeseqDataSet(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    counts<span class="op">=</span>count.T,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    metadata<span class="op">=</span>metadata,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    design<span class="op">=</span><span class="st">"~Conditions"</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    refit_cooks<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="2" type="1">
 <li>Perform the DESeq2 analysis with deseq2() function on the dds object (It may take a few mins)</li>
 </ol>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>dds.deseq2()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>dds.deseq2()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>OPTIONAL: Look at the sub-variables inside the dds object</p>
 <ol start="3" type="1">
 <li>Perform the comparison between Infected and Normal group using DeseqStats() function</li>
 </ol>
-<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> DeseqStats(dds, contrast<span class="op">=</span>[<span class="st">"Conditions"</span>, <span class="st">"Infected"</span>, <span class="st">"Normal"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> DeseqStats(dds, contrast<span class="op">=</span>[<span class="st">"Conditions"</span>, <span class="st">"Infected"</span>, <span class="st">"Normal"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="4" type="1">
 <li>Retrieve the results and assign it to a different object, e.g.&nbsp;deseq_results (hint: ds.results_df after running ds.summary()).</li>
 </ol>
 <p>Remember that since we are doing a lot of tests, as many tests as genes in our experiment, we need to correct our pvalues. DESeq already did this while testing for differences among our groups, so let’s create a histogram of these adjusted pvalues and an MA-plot to inspect if there is any enrichment of DE genes.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>ds.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>deseq_results <span class="op">=</span> ds.results_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>ds.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>deseq_results <span class="op">=</span> ds.results_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="5" type="1">
 <li>Make a histogram using the hist() function on the padj column of the results object. Change arguments in the placeholder to make a nice histogram (eg. add some color, a title etc.) https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.hist.html</li>
 </ol>
-<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>deseq_results[<span class="st">"padj"</span>].hist(bins <span class="op">=</span> <span class="dv">100</span>, {__})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>deseq_results[<span class="st">"padj"</span>].hist(bins <span class="op">=</span> <span class="dv">100</span>, {__})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="6" type="1">
 <li>Create a MA-plot with the plot_MA() function from DeseqStats object (not dds!).</li>
 </ol>
-<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>ds.plot_MA()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>ds.plot_MA()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="7" type="1">
 <li>Let’s remove the genes with NAN adjusted p-values. Use the .notna() function on the padj column of the results object to keep those that has valid adjusted p-values.</li>
 </ol>
@@ -635,8 +668,8 @@ Tip
 <p>There should be 953 valid genes.</p>
 </div>
 </div>
-<div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>notna_deseq <span class="op">=</span> {__}</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>notna_deseq.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>notna_deseq <span class="op">=</span> {__}</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>notna_deseq.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -650,7 +683,7 @@ Tip
 <p>Remember: There are up and down-regulated genes, make sure that you sort it based on their absolute values. Hint: .sort_values(“log2FoldChange”, key = abs)</p>
 </div>
 </div>
-<div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>notna_deseq[notna_deseq[<span class="st">"padj"</span>] <span class="op">&lt;</span> <span class="fl">0.05</span>].sort_values(<span class="st">"log2FoldChange"</span>, key <span class="op">=</span> <span class="bu">abs</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>notna_deseq[notna_deseq[<span class="st">"padj"</span>] <span class="op">&lt;</span> <span class="fl">0.05</span>].sort_values(<span class="st">"log2FoldChange"</span>, key <span class="op">=</span> <span class="bu">abs</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -665,12 +698,12 @@ Note
 <p>include the non-significant genes too. We will use this in our future lab on network and visualization.</p>
 </div>
 </div>
-<div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>notna_deseq[notna_deseq[<span class="st">"padj"</span>] <span class="op">&lt;</span> <span class="fl">0.05</span>].to_csv(<span class="st">"Deseq2_Results.txt"</span>, sep <span class="op">=</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(dds.layers[<span class="st">"normed_counts"</span>], columns <span class="op">=</span> dds.var_names, index<span class="op">=</span>dds.obs_names).T.to_csv(<span class="st">"Deseq2_NormalizedCount.txt"</span>, sep <span class="op">=</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>notna_deseq[notna_deseq[<span class="st">"padj"</span>] <span class="op">&lt;</span> <span class="fl">0.05</span>].to_csv(<span class="st">"Deseq2_Results.txt"</span>, sep <span class="op">=</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(dds.layers[<span class="st">"normed_counts"</span>], columns <span class="op">=</span> dds.var_names, index<span class="op">=</span>dds.obs_names).T.to_csv(<span class="st">"Deseq2_NormalizedCount.txt"</span>, sep <span class="op">=</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
-<section id="enrichment-analysis-go-terms" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> Enrichment Analysis: GO-terms</h1>
+<section id="enrichment-analysis-go-terms" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Enrichment Analysis: GO-terms</h1>
 <p>To gain functional insight into the differentially expressed genes (DEGs), we performed a <strong>Gene Ontology (GO) enrichment analysis</strong>, focusing on the <strong>Biological Process (BP)</strong> category. This analysis identifies biological pathways and processes that are statistically overrepresented among the DEGs compared to what would be expected by chance.</p>
 <p>Key goals of this analysis include:</p>
 <ul>
@@ -683,8 +716,8 @@ Note
 <p>The output of this step will be a ranked list of enriched GO Biological Process terms, along with their associated enrichment scores and adjusted p-values. This helps us interpret how the infection condition impacts cellular and molecular functions.</p>
 <p>For enrichment analysis, we will use <strong>Gseapy</strong> package, specifically the Enrichr API (GUI: https://maayanlab.cloud/Enrichr/)</p>
 <p>https://gseapy.readthedocs.io/en/latest/gseapy_example.html</p>
-<section id="steps-2" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="steps-2"><span class="header-section-number">5.1</span> Steps</h2>
+<section id="steps-2" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="steps-2"><span class="header-section-number">6.1</span> Steps</h2>
 <ol start="0" type="1">
 <li>Since our the gene names are using “Ensembl Gene ID” and most enrichment analysis packages supports only “Gene Name” or “HGNC ID”, let’s first convert them. We will use the pyBioMart package to help us retrieving the mapping file.</li>
 </ol>
@@ -702,27 +735,27 @@ Tip
 <p>NOTE: Gseapy package has similar functions, but pyBioMart package can give a more flexible implementation option in larger data</p>
 </div>
 </div>
-<div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Starting connections to ensembl website using the "Dataset" function from pyBioMart</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>dataset <span class="op">=</span> Dataset(name<span class="op">=</span><span class="st">'hsapiens_gene_ensembl'</span>, host<span class="op">=</span><span class="st">'http://www.ensembl.org'</span>)</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Retrieving name mapping dataframe between "Esembl ID" and External Gene Name (HGNC)</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>mapping <span class="op">=</span> dataset.query(attributes<span class="op">=</span>[<span class="st">'ensembl_gene_id'</span>, <span class="st">'external_gene_name'</span>])</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Look at the mapping structure</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>mapping.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's copy the deseq results again, focusing only on differentially expressed genes</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>significant_deseq <span class="op">=</span> deseq_results[deseq_results[<span class="st">"padj"</span>] <span class="op">&lt;</span> <span class="fl">0.05</span>]</span>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Starting connections to ensembl website using the "Dataset" function from pyBioMart</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>dataset <span class="op">=</span> Dataset(name<span class="op">=</span><span class="st">'hsapiens_gene_ensembl'</span>, host<span class="op">=</span><span class="st">'http://www.ensembl.org'</span>)</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Now we are merging the mapping dataframe to the significant_deseq object. read more on Pandas Merging function if needed</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>significant_deseq <span class="op">=</span> significant_deseq.merge(mapping, left_index <span class="op">=</span> <span class="va">True</span>, right_on <span class="op">=</span> <span class="st">"Gene stable ID"</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Retrieving name mapping dataframe between "Esembl ID" and External Gene Name (HGNC)</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>mapping <span class="op">=</span> dataset.query(attributes<span class="op">=</span>[<span class="st">'ensembl_gene_id'</span>, <span class="st">'external_gene_name'</span>])</span>
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Letäs remove those with no gene names</span></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>significant_deseq <span class="op">=</span> significant_deseq[significant_deseq[<span class="st">"Gene name"</span>].notna()]</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co">#Look at the new significant_deseq structure</span></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>significant_deseq.head()</span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Now we have "Gene Name" columns that we can use for enrichment analysis</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Look at the mapping structure</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>mapping.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's copy the deseq results again, focusing only on differentially expressed genes</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>significant_deseq <span class="op">=</span> deseq_results[deseq_results[<span class="st">"padj"</span>] <span class="op">&lt;</span> <span class="fl">0.05</span>]</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Now we are merging the mapping dataframe to the significant_deseq object. read more on Pandas Merging function if needed</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>significant_deseq <span class="op">=</span> significant_deseq.merge(mapping, left_index <span class="op">=</span> <span class="va">True</span>, right_on <span class="op">=</span> <span class="st">"Gene stable ID"</span>)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Letäs remove those with no gene names</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>significant_deseq <span class="op">=</span> significant_deseq[significant_deseq[<span class="st">"Gene name"</span>].notna()]</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="co">#Look at the new significant_deseq structure</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>significant_deseq.head()</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Now we have "Gene Name" columns that we can use for enrichment analysis</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol type="1">
 <li>Make two lists of significantly differentially expressed genes (signficant_deseq object): up and down-regulated genes (use the Gene name columns)</li>
 </ol>
@@ -744,10 +777,10 @@ Tip
 <p>https://pandas.pydata.org/docs/reference/api/pandas.Series.to_list.html</p>
 </div>
 </div>
-<div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>up <span class="op">=</span> {__}</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>down <span class="op">=</span> {__}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(up)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(down)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>up <span class="op">=</span> {__}</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>down <span class="op">=</span> {__}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(up)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(down)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="2" type="1">
 <li>Perform enrichment analysis using Enrichr API from GSEAPY. Do one enrichment analysis for each direction (one for up and one for down-regulated genes). For uniformity, please use the object name enr_up and enr_down.</li>
 </ol>
@@ -764,13 +797,13 @@ Tip
 <p>https://gseapy.readthedocs.io/en/latest/gseapy_example.html#Enrichr-Web-Serives-(without-a-backgound-input)</p>
 </div>
 </div>
-<div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>enr_up <span class="op">=</span> {__}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>enr_down <span class="op">=</span> {__}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>enr_up <span class="op">=</span> {__}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>enr_down <span class="op">=</span> {__}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="3" type="1">
 <li>To get detailed output of the enrichment analysis results in dataframe format, access the .res2d variable under enr_up and enr_down</li>
 </ol>
-<div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>enr_up.res2d.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>enr_down.res2d.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>enr_up.res2d.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>enr_down.res2d.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="4" type="1">
 <li>Plot the enrichment analysis results focusing on the top 10 most enriched processes for each up and down-regulated genes. Explore all the plotting options and pretify it with the options. (use the option cutoff=1, since we do not have that many genes to enrich)</li>
 </ol>
@@ -787,8 +820,8 @@ Tip
 <p>https://gseapy.readthedocs.io/en/latest/gseapy_example.html#Plotting</p>
 </div>
 </div>
-<div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> {__}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> {__}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> {__}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <hr>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
@@ -802,43 +835,43 @@ Code solutions
 </div>
 <div id="callout-11" class="callout-11-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div class="sourceCode" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>count <span class="op">=</span> pd.read_csv(<span class="st">"counts.tsv"</span>, sep <span class="op">=</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>, index_col <span class="op">=</span> <span class="dv">0</span>)</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>metadata <span class="op">=</span> pd.read_csv(<span class="st">"metadata.txt"</span>, sep <span class="op">=</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>, index_col <span class="op">=</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Setting up the dataframe for analysis</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co">## 1. Remove the all zero genes from our count file, by keeping only the rows with total sum greater than 0. Assign it to "count_PCA".</span></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>count_PCA <span class="op">=</span> count[count.<span class="bu">sum</span>(<span class="dv">1</span>) <span class="op">&gt;</span> <span class="dv">0</span>]</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="co">## 2. Replace the sample ID to their conditions (normal or infected)</span></span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="co">### 2.1. we make sure that the sample sequence in the count file is the same with metadata (Yes it is in this example, but it is not going to always be like that :D)</span></span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>count_PCA <span class="op">=</span> count_PCA[metadata.index]</span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="co">### 2.2. replacing the column names with their metadata["Conditions"] column</span></span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>count_PCA.columns <span class="op">=</span> metadata[<span class="st">"Conditions"</span>]</span>
-<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a><span class="co">## PS: There is a more pythonic way to replace the column names:</span></span>
-<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a><span class="co"># count_PCA = count_PCA.rename(columns = metadata["Conditions"])</span></span>
-<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a><span class="co">## 3. Log-transform the count_PCA. Read about "log1p" function from numpy, what does it mean?</span></span>
-<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>count_PCA <span class="op">=</span> np.log1p(count_PCA)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> model.fit_transform(count_PCA.T)</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> model.scatter(figsize <span class="op">=</span> (<span class="dv">6</span>,<span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>notna_deseq <span class="op">=</span> deseq_results[deseq_results[<span class="st">"padj"</span>].notna()]</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>notna_deseq.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>up <span class="op">=</span> significant_deseq[significant_deseq[<span class="st">"log2FoldChange"</span>] <span class="op">&gt;</span> <span class="dv">0</span>][<span class="st">"Gene name"</span>].to_list()</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>down <span class="op">=</span> significant_deseq[significant_deseq[<span class="st">"log2FoldChange"</span>] <span class="op">&lt;</span> <span class="dv">0</span>][<span class="st">"Gene name"</span>].to_list()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>enr_up <span class="op">=</span> gp.enrichr(gene_list<span class="op">=</span>up, </span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>                 gene_sets<span class="op">=</span><span class="st">'GO_Biological_Process_2025'</span>,</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>                 organism<span class="op">=</span><span class="st">'human'</span>, <span class="co"># don't forget to set organism to the one you desired! e.g. Yeast</span></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>                 outdir<span class="op">=</span><span class="va">None</span>, <span class="co"># don't write to disk</span></span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>                )</span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>enr_down <span class="op">=</span> gp.enrichr(gene_list<span class="op">=</span>down, <span class="co"># or "./tests/data/gene_list.txt",</span></span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>                 gene_sets<span class="op">=</span><span class="st">'GO_Biological_Process_2025'</span>,</span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>                 organism<span class="op">=</span><span class="st">'human'</span>, <span class="co"># don't forget to set organism to the one you desired! e.g. Yeast</span></span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>                 outdir<span class="op">=</span><span class="va">None</span>, <span class="co"># don't write to disk</span></span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>                )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> gp.dotplot(enr_up.res2d, title<span class="op">=</span><span class="st">'GO BP'</span>,cmap<span class="op">=</span><span class="st">'viridis_r'</span>, size<span class="op">=</span><span class="dv">10</span>, figsize<span class="op">=</span>(<span class="dv">3</span>,<span class="dv">5</span>), cutoff<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>count <span class="op">=</span> pd.read_csv(<span class="st">"counts.tsv"</span>, sep <span class="op">=</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>, index_col <span class="op">=</span> <span class="dv">0</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>metadata <span class="op">=</span> pd.read_csv(<span class="st">"metadata.txt"</span>, sep <span class="op">=</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>, index_col <span class="op">=</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Setting up the dataframe for analysis</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="co">## 1. Remove the all zero genes from our count file, by keeping only the rows with total sum greater than 0. Assign it to "count_PCA".</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>count_PCA <span class="op">=</span> count[count.<span class="bu">sum</span>(<span class="dv">1</span>) <span class="op">&gt;</span> <span class="dv">0</span>]</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="co">## 2. Replace the sample ID to their conditions (normal or infected)</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="co">### 2.1. we make sure that the sample sequence in the count file is the same with metadata (Yes it is in this example, but it is not going to always be like that :D)</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>count_PCA <span class="op">=</span> count_PCA[metadata.index]</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="co">### 2.2. replacing the column names with their metadata["Conditions"] column</span></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>count_PCA.columns <span class="op">=</span> metadata[<span class="st">"Conditions"</span>]</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a><span class="co">## PS: There is a more pythonic way to replace the column names:</span></span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a><span class="co"># count_PCA = count_PCA.rename(columns = metadata["Conditions"])</span></span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a><span class="co">## 3. Log-transform the count_PCA. Read about "log1p" function from numpy, what does it mean?</span></span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>count_PCA <span class="op">=</span> np.log1p(count_PCA)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> model.fit_transform(count_PCA.T)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> model.scatter(figsize <span class="op">=</span> (<span class="dv">6</span>,<span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>notna_deseq <span class="op">=</span> deseq_results[deseq_results[<span class="st">"padj"</span>].notna()]</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>notna_deseq.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>up <span class="op">=</span> significant_deseq[significant_deseq[<span class="st">"log2FoldChange"</span>] <span class="op">&gt;</span> <span class="dv">0</span>][<span class="st">"Gene name"</span>].to_list()</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>down <span class="op">=</span> significant_deseq[significant_deseq[<span class="st">"log2FoldChange"</span>] <span class="op">&lt;</span> <span class="dv">0</span>][<span class="st">"Gene name"</span>].to_list()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>enr_up <span class="op">=</span> gp.enrichr(gene_list<span class="op">=</span>up, </span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>                 gene_sets<span class="op">=</span><span class="st">'GO_Biological_Process_2025'</span>,</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>                 organism<span class="op">=</span><span class="st">'human'</span>, <span class="co"># don't forget to set organism to the one you desired! e.g. Yeast</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>                 outdir<span class="op">=</span><span class="va">None</span>, <span class="co"># don't write to disk</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>                )</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>enr_down <span class="op">=</span> gp.enrichr(gene_list<span class="op">=</span>down, <span class="co"># or "./tests/data/gene_list.txt",</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>                 gene_sets<span class="op">=</span><span class="st">'GO_Biological_Process_2025'</span>,</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>                 organism<span class="op">=</span><span class="st">'human'</span>, <span class="co"># don't forget to set organism to the one you desired! e.g. Yeast</span></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>                 outdir<span class="op">=</span><span class="va">None</span>, <span class="co"># don't write to disk</span></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>                )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> gp.dotplot(enr_up.res2d, title<span class="op">=</span><span class="st">'GO BP'</span>,cmap<span class="op">=</span><span class="st">'viridis_r'</span>, size<span class="op">=</span><span class="dv">10</span>, figsize<span class="op">=</span>(<span class="dv">3</span>,<span class="dv">5</span>), cutoff<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
