@@ -23,7 +23,7 @@ This repository contains practical exercises for the BIO512 course at University
 
 - DESeq2 workflow:
   - [Practical: DESeq2 Analysis](practicals/PRACTICALS-DESeq/PRACTICAL_DESEQ_ANALYSIS.qmd)
-  - [Practical: Data Grouping and Visualisation](practicals/_PRACTICALS-DESeq/PRACTICAL_DESEQ_ADVANCED.qmd)
+  - [Practical: Data Grouping and Visualisation](practicals/PRACTICALS-DESeq/PRACTICAL_DESEQ_ADVANCED.qmd)
 - Network analysis:
   - [[LOCKED] Practical: Network visualisation and Centrality analysis](practicals/PRACTICALS-Network_Visualisation/_PRACTICAL_NETWORK_ANALYSIS.qmd)
 
