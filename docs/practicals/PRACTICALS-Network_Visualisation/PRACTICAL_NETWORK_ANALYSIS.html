@@ -310,7 +310,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Advanced PCA &amp; Correlation</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../practicals/PRACTICALS-Network_Visualisation/_PRACTICAL_NETWORK_ANALYSIS.qmd">
+    <a class="dropdown-item" href="../../practicals/PRACTICALS-Network_Visualisation/PRACTICAL_NETWORK_ANALYSIS.html">
  <span class="dropdown-text">Network Analysis</span></a>
   </li>  
     </ul>
@@ -374,34 +374,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
-  <li><a href="#optional-network-construction-from-normalized-counts" id="toc-optional-network-construction-from-normalized-counts" class="nav-link" data-scroll-target="#optional-network-construction-from-normalized-counts"><span class="header-section-number">2</span> (Optional) Network construction from normalized counts</a></li>
-  <li><a href="#load-network-and-visualize-in-igraph" id="toc-load-network-and-visualize-in-igraph" class="nav-link" data-scroll-target="#load-network-and-visualize-in-igraph"><span class="header-section-number">3</span> Load network and visualize in iGraph</a>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
   <ul class="collapse">
-  <li><a href="#questions" id="toc-questions" class="nav-link" data-scroll-target="#questions"><span class="header-section-number">3.1</span> Questions</a></li>
+  <li><a href="#library-imports" id="toc-library-imports" class="nav-link" data-scroll-target="#library-imports">Library Imports</a></li>
   </ul></li>
-  <li><a href="#centrality-analysis" id="toc-centrality-analysis" class="nav-link" data-scroll-target="#centrality-analysis"><span class="header-section-number">4</span> Centrality analysis</a>
+  <li><a href="#optional-network-construction-from-normalized-counts" id="toc-optional-network-construction-from-normalized-counts" class="nav-link" data-scroll-target="#optional-network-construction-from-normalized-counts">(Optional) Network construction from normalized counts</a></li>
+  <li><a href="#load-network-and-visualize-in-igraph" id="toc-load-network-and-visualize-in-igraph" class="nav-link" data-scroll-target="#load-network-and-visualize-in-igraph">Load network and visualize in iGraph</a></li>
+  <li><a href="#centrality-analysis" id="toc-centrality-analysis" class="nav-link" data-scroll-target="#centrality-analysis">Centrality analysis</a></li>
+  <li><a href="#clustering-module-detection" id="toc-clustering-module-detection" class="nav-link" data-scroll-target="#clustering-module-detection">Clustering / Module Detection</a>
   <ul class="collapse">
-  <li><a href="#questions-1" id="toc-questions-1" class="nav-link" data-scroll-target="#questions-1"><span class="header-section-number">4.1</span> Questions</a></li>
-  <li><a href="#optional-advance-plotting-use-centrality-variables-as-the-node-size" id="toc-optional-advance-plotting-use-centrality-variables-as-the-node-size" class="nav-link" data-scroll-target="#optional-advance-plotting-use-centrality-variables-as-the-node-size"><span class="header-section-number">4.2</span> Optional: Advance Plotting: Use centrality variables as the node size</a></li>
+  <li><a href="#common-approaches" id="toc-common-approaches" class="nav-link" data-scroll-target="#common-approaches">Common Approaches</a></li>
+  <li><a href="#key-concepts" id="toc-key-concepts" class="nav-link" data-scroll-target="#key-concepts">Key Concepts</a></li>
+  <li><a href="#leiden-algorithm" id="toc-leiden-algorithm" class="nav-link" data-scroll-target="#leiden-algorithm">Leiden Algorithm</a></li>
   </ul></li>
-  <li><a href="#clustering-module-detection" id="toc-clustering-module-detection" class="nav-link" data-scroll-target="#clustering-module-detection"><span class="header-section-number">5</span> Clustering / Module Detection</a>
+  <li><a href="#optional-clustering-graph-visualization" id="toc-optional-clustering-graph-visualization" class="nav-link" data-scroll-target="#optional-clustering-graph-visualization">Optional: Clustering Graph Visualization</a>
   <ul class="collapse">
-  <li><a href="#common-approaches" id="toc-common-approaches" class="nav-link" data-scroll-target="#common-approaches"><span class="header-section-number">5.0.1</span> Common Approaches</a></li>
-  <li><a href="#key-concepts" id="toc-key-concepts" class="nav-link" data-scroll-target="#key-concepts"><span class="header-section-number">5.0.2</span> Key Concepts</a></li>
-  <li><a href="#leiden-algorithm" id="toc-leiden-algorithm" class="nav-link" data-scroll-target="#leiden-algorithm"><span class="header-section-number">5.0.3</span> Leiden Algorithm</a></li>
-  <li><a href="#questions-to-explore" id="toc-questions-to-explore" class="nav-link" data-scroll-target="#questions-to-explore"><span class="header-section-number">5.1</span> Questions to Explore</a></li>
+  <li><a href="#optional-task-can-you-identify-the-clusters-with-hubs-using-the-plot" id="toc-optional-task-can-you-identify-the-clusters-with-hubs-using-the-plot" class="nav-link" data-scroll-target="#optional-task-can-you-identify-the-clusters-with-hubs-using-the-plot">Optional Task: Can you identify the clusters with hubs using the plot?</a></li>
   </ul></li>
-  <li><a href="#optional-clustering-graph-visualization" id="toc-optional-clustering-graph-visualization" class="nav-link" data-scroll-target="#optional-clustering-graph-visualization"><span class="header-section-number">6</span> Optional: Clustering Graph Visualization</a>
-  <ul class="collapse">
-  <li><a href="#optional-task-can-you-identify-the-clusters-with-hubs-using-the-plot" id="toc-optional-task-can-you-identify-the-clusters-with-hubs-using-the-plot" class="nav-link" data-scroll-target="#optional-task-can-you-identify-the-clusters-with-hubs-using-the-plot"><span class="header-section-number">6.1</span> Optional Task: Can you identify the clusters with hubs using the plot?</a></li>
-  </ul></li>
-  <li><a href="#additional-instructions-for-network-construction-if-you-have-time" id="toc-additional-instructions-for-network-construction-if-you-have-time" class="nav-link" data-scroll-target="#additional-instructions-for-network-construction-if-you-have-time"><span class="header-section-number">7</span> Additional instructions for network construction (if you have time)</a>
-  <ul class="collapse">
-  <li><a href="#load-normalized-count-file" id="toc-load-normalized-count-file" class="nav-link" data-scroll-target="#load-normalized-count-file"><span class="header-section-number">7.1</span> Load normalized count file</a></li>
-  <li><a href="#generating-gene-co-expression-network" id="toc-generating-gene-co-expression-network" class="nav-link" data-scroll-target="#generating-gene-co-expression-network"><span class="header-section-number">7.2</span> Generating Gene Co-Expression Network</a></li>
-  </ul></li>
-  <li><a href="#things-to-append-to-your-submission" id="toc-things-to-append-to-your-submission" class="nav-link" data-scroll-target="#things-to-append-to-your-submission"><span class="header-section-number">8</span> Things to append to your submission</a></li>
   </ul>
 </nav>
     </div>
@@ -441,8 +430,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="introduction" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
 <p>In this practical, we will construct (or load) a gene co-expression network from normalized RNA-seq counts and analyze its topology. You will compute centrality measures, detect modules via Leiden clustering, and perform functional enrichment on selected clusters.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -458,11 +447,11 @@ Setup Instructions
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/BIO512/Network_analysis</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Required files can be fetched from the Cluster</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> <span class="at">-r</span> <span class="op">&lt;</span>your_vera_username<span class="op">&gt;</span>@vera2.chalmers.se:/cephyr/NOBACKUP/groups/n2bin_gu/BIO512/Network_analysis/<span class="pp">*</span> ~/BIO512/Network_analysis/</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> <span class="at">-r</span> <span class="op">&lt;</span>your_vera_username<span class="op">&gt;</span>@vera2.chalmers.se:/cephyr/NOBACKUP/groups/n2bin_gu/BIO512_2026/Network/<span class="pp">*</span> ~/BIO512/Network_analysis/</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Remember to activate the conda environment</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate BIO512_v1</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Launch Jupyter Lab or run the notebook in VScode</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Launch Jupyter Lab or run a notebook in VScode</span></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># For any excersise that has a {__}, this is a placeholder that you need to fill in with appropriate code.</span></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ex">myvariable</span> = {__}</span>
@@ -470,24 +459,78 @@ Setup Instructions
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="ex">myvariable</span> = <span class="st">"Hello, World!"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
+<section id="library-imports" class="level2">
+<h2 class="anchored" data-anchor-id="library-imports">Library Imports</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Adding these 4 lines will make our life easier if we need </span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># to do figure post-processing in other software</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>sns.<span class="bu">set</span>(font<span class="op">=</span><span class="st">"Arial"</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>sns.set_style(<span class="st">"white"</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>matplotlib.rcParams[<span class="st">'pdf.fonttype'</span>] <span class="op">=</span> <span class="dv">42</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>matplotlib.rcParams[<span class="st">'ps.fonttype'</span>] <span class="op">=</span> <span class="dv">42</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pydeseq2.dds <span class="im">import</span> DeseqDataSet</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pydeseq2.default_inference <span class="im">import</span> DefaultInference</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pydeseq2.ds <span class="im">import</span> DeseqStats</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.sandbox.stats.multicomp <span class="im">import</span> multipletests</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pca <span class="im">import</span> pca</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pybiomart <span class="im">import</span> Dataset</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA <span class="im">as</span> sklearnPCA</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, math</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>os.environ[<span class="st">'KMP_DUPLICATE_LIB_OK'</span>]<span class="op">=</span><span class="st">'True'</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pickle</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> zscore, spearmanr</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gseapy <span class="im">as</span> gp</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> igraph <span class="im">as</span> ig</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> coexpression_generation(norm_count,padj_thr<span class="op">=</span><span class="fl">0.05</span>):</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">'Calculating Correlation..'</span>)</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>        temp<span class="op">=</span>spearmanr(norm_count.T)</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>        corr<span class="op">=</span>pd.DataFrame(temp[<span class="dv">0</span>],columns<span class="op">=</span><span class="bu">list</span>(norm_count.index),index<span class="op">=</span><span class="bu">list</span>(norm_count.index))</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>        pval<span class="op">=</span>pd.DataFrame(temp[<span class="dv">1</span>],columns<span class="op">=</span><span class="bu">list</span>(norm_count.index),index<span class="op">=</span><span class="bu">list</span>(norm_count.index))</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">'Filtering the matrix Correlation..'</span>)</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>        corr<span class="op">=</span>corr.where(np.triu(np.ones(corr.shape)).astype(np.<span class="bu">bool</span>))</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>        pval<span class="op">=</span>pval.where(np.triu(np.ones(pval.shape)).astype(np.<span class="bu">bool</span>))</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">'Making long table of Correlation..'</span>)</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>        corr2<span class="op">=</span>corr.unstack().reset_index(name<span class="op">=</span><span class="st">'weight'</span>)</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>        pval2<span class="op">=</span>pval.unstack().reset_index(name<span class="op">=</span><span class="st">'pval'</span>)</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>        res<span class="op">=</span>corr2.merge(pval2,on<span class="op">=</span>[<span class="st">'level_0'</span>,<span class="st">'level_1'</span>])</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>        res<span class="op">=</span>res[res[<span class="st">'level_0'</span>] <span class="op">!=</span> res[<span class="st">'level_1'</span>]]</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>        res<span class="op">=</span>res.dropna()</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">'Adjusting P-val'</span>)</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>        res[<span class="st">'padj'</span>]<span class="op">=</span>multipletests(res[<span class="st">'pval'</span>],method<span class="op">=</span><span class="st">'fdr_bh'</span>)[<span class="dv">1</span>]</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>        res<span class="op">=</span>res[res.padj <span class="op">&lt;</span> padj_thr].reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>        res<span class="op">=</span>res[[<span class="st">'level_0'</span>,<span class="st">'level_1'</span>,<span class="st">'weight'</span>]]</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">'Done!!'</span>)</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> res</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <hr>
 </section>
-<section id="optional-network-construction-from-normalized-counts" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> (Optional) Network construction from normalized counts</h1>
+</section>
+<section id="optional-network-construction-from-normalized-counts" class="level1">
+<h1>(Optional) Network construction from normalized counts</h1>
 <p>This step is optional because I have generated the pre-calculated network based on the our Leishmania data. <strong>We will focus more on the downstream analysis in this lab</strong>. I would suggest you to go through the “coexpression_generation” function above to learn more about the detailed process. This function was taken from the pipeline used in this this paper: https://pubmed.ncbi.nlm.nih.gov/37038090/</p>
 <p>If you want to do this step yourself, there is an additional instruction at the bottom of the practical</p>
 <hr>
 </section>
-<section id="load-network-and-visualize-in-igraph" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Load network and visualize in iGraph</h1>
+<section id="load-network-and-visualize-in-igraph" class="level1">
+<h1>Load network and visualize in iGraph</h1>
 <ol type="1">
 <li>Load the co-expression network dataframe</li>
 </ol>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>coexp_network <span class="op">=</span> pd.read_csv(<span class="st">"coexpression_network.txt"</span>, sep <span class="op">=</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>coexp_network <span class="op">=</span> pd.read_csv(<span class="st">"coexpression_network.txt"</span>, sep <span class="op">=</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="2" type="1">
 <li>Load the dataframe into the iGraph.</li>
 </ol>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>g <span class="op">=</span> ig.Graph.TupleList(<span class="bu">zip</span>(coexp_network[<span class="st">'level_0'</span>],coexp_network[<span class="st">'level_1'</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>g <span class="op">=</span> ig.Graph.TupleList(<span class="bu">zip</span>(coexp_network[<span class="st">'level_0'</span>],coexp_network[<span class="st">'level_1'</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -499,34 +542,43 @@ Note
 </div>
 <div class="callout-body-container callout-body">
 <p>Network can be visualized using the iGraph built-in functions. In order to make a neat layout, we can select different layout options.</p>
-<p>In this lab, we let igraph deciding the most suitable layout (auto), but there are many other options Read below: https://igraph.org/python/tutorial/0.9.6/visualisation.html</p>
+<p>In this lab, we let igraph decide the most suitable layout (auto), but there are many other options Read below: https://igraph.org/python/tutorial/0.9.6/visualisation.html</p>
 </div>
 </div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>layout <span class="op">=</span> g.layout(layout<span class="op">=</span><span class="st">'auto'</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots() <span class="co">## We are using matplotlib for the visualization, otherwise there are many other requirements to install</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>ig.plot(</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    g,</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    layout <span class="op">=</span> layout,</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    target<span class="op">=</span>ax, <span class="co"># this option is to attach the plot to matplotlib</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>fig.set_size_inches(<span class="dv">20</span>, <span class="dv">20</span>) <span class="co"># defining the size of the canvas</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<section id="questions" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="questions"><span class="header-section-number">3.1</span> Questions</h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>layout <span class="op">=</span> g.layout(layout<span class="op">=</span><span class="st">'auto'</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots() <span class="co">## We are using matplotlib for the visualization, otherwise there are many other requirements to install</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>ig.plot(</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    g,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    layout <span class="op">=</span> layout,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    target<span class="op">=</span>ax, <span class="co"># this option is to attach the plot to matplotlib</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>fig.set_size_inches(<span class="dv">20</span>, <span class="dv">20</span>) <span class="co"># defining the size of the canvas</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Questions
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ul>
 <li><strong>Q1: How many nodes and edges?</strong></li>
 <li><strong>Q2: Network diameter and density? Interpret their meaning.</strong></li>
 </ul>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>g.vcount()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>g.ecount()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>g.diameter()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>g.density()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>g.vcount()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>g.ecount()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>g.diameter()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>g.density()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <hr>
 </section>
-</section>
-<section id="centrality-analysis" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Centrality analysis</h1>
+<section id="centrality-analysis" class="level1">
+<h1>Centrality analysis</h1>
 <p>Centrality measures help identify important or influential genes within a co-expression network. Different measures capture different aspects of “importance”:</p>
 <ul>
 <li>Degree Centrality: Number of direct connections a gene has. Hub genes often play central biological roles.<br>
@@ -538,8 +590,16 @@ Note
 <li>Eigenvector Centrality: Importance of a gene based not only on its connections, but also on the importance of its neighbors.</li>
 </ul>
 <p>Read iGraph Python manual https://python.igraph.org/en/stable/</p>
-<section id="questions-1" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="questions-1"><span class="header-section-number">4.1</span> Questions</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Questions
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -563,46 +623,62 @@ Tip
 </li>
 <li><strong>Q6: Compare biological functions of hub vs.&nbsp;bridge genes — do they play different roles? (Hint: Use the Enrichr website or GSEAPY module from DESeq2 lab to identify their functions) https://maayanlab.cloud/Enrichr/</strong></li>
 </ul>
-<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate centrality measures</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>degree_centrality <span class="op">=</span> {__}</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>betweenness_centrality <span class="op">=</span> {__}</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>closeness_centrality <span class="op">=</span> {__}</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>eigenvector_centrality <span class="op">=</span> {__}</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Add centrality values as node attributes</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>g.vs[<span class="st">"degree"</span>] <span class="op">=</span> degree_centrality</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>g.vs[<span class="st">"betweenness"</span>] <span class="op">=</span> betweenness_centrality</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>g.vs[<span class="st">"closeness"</span>] <span class="op">=</span> closeness_centrality</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>g.vs[<span class="st">"eigenvector"</span>] <span class="op">=</span> eigenvector_centrality</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a DF to present different centrality analyses</span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>centrality_df <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"gene"</span>: g.vs[<span class="st">"name"</span>],</span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"degree"</span>: degree_centrality,</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"betweenness"</span>: betweenness_centrality,</span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"closeness"</span>: closeness_centrality,</span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">"eigenvector"</span>: eigenvector_centrality</span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="optional-advance-plotting-use-centrality-variables-as-the-node-size" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="optional-advance-plotting-use-centrality-variables-as-the-node-size"><span class="header-section-number">4.2</span> Optional: Advance Plotting: Use centrality variables as the node size</h2>
-<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots() <span class="co">## We are using matplotlib for the visualization, otherwise there are many other requirements to install</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>ig.plot(</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    g,</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    layout <span class="op">=</span> layout,</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    target<span class="op">=</span>ax, <span class="co"># this option is to attach the plot to matplotlib</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    vertex_size<span class="op">=</span>g.degree(),</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>fig.set_size_inches(<span class="dv">20</span>, <span class="dv">20</span>) <span class="co"># defining the size of the canvas</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate centrality measures</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># HINT: You use igraph functions for this, like with g.vcount(). </span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>degree_centrality <span class="op">=</span> {__}</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>betweenness_centrality <span class="op">=</span> {__}</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>closeness_centrality <span class="op">=</span> {__}</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>eigenvector_centrality <span class="op">=</span> {__}</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Add centrality values as node attributes</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>g.vs[<span class="st">"degree"</span>] <span class="op">=</span> degree_centrality</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>g.vs[<span class="st">"betweenness"</span>] <span class="op">=</span> betweenness_centrality</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>g.vs[<span class="st">"closeness"</span>] <span class="op">=</span> closeness_centrality</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>g.vs[<span class="st">"eigenvector"</span>] <span class="op">=</span> eigenvector_centrality</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a DF to present different centrality analyses</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>centrality_df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"gene"</span>: g.vs[<span class="st">"name"</span>],</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"degree"</span>: degree_centrality,</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"betweenness"</span>: betweenness_centrality,</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">"closeness"</span>: closeness_centrality,</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"eigenvector"</span>: eigenvector_centrality</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>top40_degree <span class="op">=</span> centrality_df.sort_values(<span class="st">"degree"</span>, ascending <span class="op">=</span> <span class="va">False</span>).iloc[<span class="dv">0</span>:<span class="dv">50</span>]</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>top40_betweenness <span class="op">=</span> {__}</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>top40_closeness <span class="op">=</span> {__}</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>top40_eigenvector <span class="op">=</span> {__}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Optional: Advance Plotting: Use centrality variables as the node size
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots() <span class="co">## We are using matplotlib for the visualization, otherwise there are many other requirements to install</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>ig.plot(</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    g,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    layout <span class="op">=</span> layout,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    target<span class="op">=</span>ax, <span class="co"># this option is to attach the plot to matplotlib</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    vertex_size<span class="op">=</span>g.degree(),</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>fig.set_size_inches(<span class="dv">20</span>, <span class="dv">20</span>) <span class="co"># defining the size of the canvas</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
 <hr>
 </section>
-</section>
-<section id="clustering-module-detection" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> Clustering / Module Detection</h1>
+<section id="clustering-module-detection" class="level1">
+<h1>Clustering / Module Detection</h1>
 <p>Gene co-expression networks often show a modular structure, where groups of genes are more strongly connected than to the rest of the network. These modules (or clusters) can reveal shared biological functions, pathways, or regulatory programs.</p>
-<section id="common-approaches" class="level3" data-number="5.0.1">
-<h3 data-number="5.0.1" class="anchored" data-anchor-id="common-approaches"><span class="header-section-number">5.0.1</span> Common Approaches</h3>
+<section id="common-approaches" class="level3">
+<h3 class="anchored" data-anchor-id="common-approaches">Common Approaches</h3>
 <ul>
 <li><strong>Community Detection Algorithms:</strong>
 <ul>
@@ -614,37 +690,57 @@ Tip
 <li><strong>WGCNA Modules:</strong> Modules defined via dynamic tree cutting on the TOM.</li>
 </ul>
 </section>
-<section id="key-concepts" class="level3" data-number="5.0.2">
-<h3 data-number="5.0.2" class="anchored" data-anchor-id="key-concepts"><span class="header-section-number">5.0.2</span> Key Concepts</h3>
+<section id="key-concepts" class="level3">
+<h3 class="anchored" data-anchor-id="key-concepts">Key Concepts</h3>
 <ul>
 <li><strong>Module:</strong> A set of tightly co-expressed genes.</li>
 <li><strong>Module Eigengene:</strong> The first principal component of a module’s gene expression — represents the overall expression profile of the module.</li>
 <li><strong>Module Size:</strong> The number of genes in the module; larger modules may represent broad pathways, smaller modules more specific processes.</li>
 </ul>
 </section>
-<section id="leiden-algorithm" class="level3" data-number="5.0.3">
-<h3 data-number="5.0.3" class="anchored" data-anchor-id="leiden-algorithm"><span class="header-section-number">5.0.3</span> Leiden Algorithm</h3>
+<section id="leiden-algorithm" class="level3">
+<h3 class="anchored" data-anchor-id="leiden-algorithm">Leiden Algorithm</h3>
 <p>In this lab, we will use the “Leiden” algorithm. To perform Leiden community detection, it is pretty simple. Read about their options and feel free to adjust it</p>
 <p>https://igraph.org/python/api/0.9.11/igraph.Graph.html#community_leiden</p>
 <p>In the same documentation, you can also learn about other approaches.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>clustering <span class="op">=</span> g.community_leiden(objective_function<span class="op">=</span><span class="st">'modularity'</span>, n_iterations<span class="op">=-</span><span class="dv">1</span>, resolution<span class="op">=</span><span class="fl">0.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>clustering <span class="op">=</span> g.community_leiden(objective_function<span class="op">=</span><span class="st">'modularity'</span>, n_iterations<span class="op">=-</span><span class="dv">1</span>, resolution<span class="op">=</span><span class="fl">0.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Cluster membership list is under clustering.membership object. It is a list, so you have to convert them to Series (see above) for easy analysis.</p>
 <p>To count the number of members in each clusters (after converted to Series), use “.value_counts()” function in Pandas https://pandas.pydata.org/docs/reference/api/pandas.Series.value_counts.html</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>memberships <span class="op">=</span> pd.Series(clustering.membership, index <span class="op">=</span> g.vs[<span class="st">"name"</span>])</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>memberships.head()</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>cluster_sizes <span class="op">=</span> {__}</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>cluster_sizes.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="questions-to-explore" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="questions-to-explore"><span class="header-section-number">5.1</span> Questions to Explore</h2>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>memberships <span class="op">=</span> pd.Series(clustering.membership, index <span class="op">=</span> g.vs[<span class="st">"name"</span>])</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>memberships.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Questions to Explore
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ul>
 <li><strong>Q7: How many modules/clusters can you detect in the network?</strong></li>
 <li><strong>Q8: Which module is the largest? Which is the smallest?</strong></li>
 <li><strong>Q9: Which modules contain the most hub genes identified earlier?</strong></li>
 <li><strong>Q10: If you pick the largest module, what biological function might it represent? Make a visualization of top 10 most enriched processes</strong></li>
 </ul>
+</div>
+</div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>({__})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>memberships.{__}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>memberships.{__}.value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Hint for Q10</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>largest_cluster <span class="op">=</span> memberships[memberships <span class="op">==</span> <span class="dv">4</span>] <span class="co">#it was cluster 4 in my case</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>enr <span class="op">=</span> gp.enrichr(gene_list<span class="op">=</span>largest_cluster.index.tolist(), <span class="co"># or "./tests/data/gene_list.txt",</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>                 {__},</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>                 {__},</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>                 {__}</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>                 )</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> gp.dotplot(enr.res2d, title<span class="op">=</span><span class="st">'GO BP'</span>,cmap<span class="op">=</span><span class="st">'viridis_r'</span>, size<span class="op">=</span><span class="dv">10</span>, figsize<span class="op">=</span>(<span class="dv">3</span>,<span class="dv">5</span>), cutoff<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -677,68 +773,76 @@ Tip
 <hr>
 </section>
 </section>
-<section id="optional-clustering-graph-visualization" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> Optional: Clustering Graph Visualization</h1>
+<section id="optional-clustering-graph-visualization" class="level1">
+<h1>Optional: Clustering Graph Visualization</h1>
 <p>Instead of plotting the graph object (g), we can also plot the clustering object. Adding the option “mark_groups” will allow for unique background color for each cluster.</p>
-<section id="optional-task-can-you-identify-the-clusters-with-hubs-using-the-plot" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="optional-task-can-you-identify-the-clusters-with-hubs-using-the-plot"><span class="header-section-number">6.1</span> Optional Task: Can you identify the clusters with hubs using the plot?</h2>
-<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>ig.plot(</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    clustering,</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    target<span class="op">=</span>ax,</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    layout<span class="op">=</span>layout,</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    mark_groups<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">#vertex_size=15,</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    vertex_size<span class="op">=</span>g.degree(),</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>fig.set_size_inches(<span class="dv">20</span>, <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="optional-task-can-you-identify-the-clusters-with-hubs-using-the-plot" class="level2">
+<h2 class="anchored" data-anchor-id="optional-task-can-you-identify-the-clusters-with-hubs-using-the-plot">Optional Task: Can you identify the clusters with hubs using the plot?</h2>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>ig.plot(</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    clustering,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    target<span class="op">=</span>ax,</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    layout<span class="op">=</span>layout,</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    mark_groups<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">#vertex_size=15,</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    vertex_size<span class="op">=</span>g.degree(),</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>fig.set_size_inches(<span class="dv">20</span>, <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <hr>
-</section>
-</section>
-<section id="additional-instructions-for-network-construction-if-you-have-time" class="level1" data-number="7">
-<h1 data-number="7"><span class="header-section-number">7</span> Additional instructions for network construction (if you have time)</h1>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Additional instructions for network construction (if you have time)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <p>If you want to generate the co-expression network yourself, follow these steps (add into new code cells in the notebook):</p>
-<section id="load-normalized-count-file" class="level2" data-number="7.1">
-<h2 data-number="7.1" class="anchored" data-anchor-id="load-normalized-count-file"><span class="header-section-number">7.1</span> Load normalized count file</h2>
+<section id="load-normalized-count-file" class="level2">
+<h2 class="anchored" data-anchor-id="load-normalized-count-file">Load normalized count file</h2>
 <p>In generating gene co-expression network, we use normalized count instead of raw counts. It can be TPM, FPKM, RPKM, or any normalization. For this lab, we are going to use normalized count from the DESeq lab.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>norm_count <span class="op">=</span> pd.read_csv(<span class="st">"Deseq2_NormalizedCount.txt"</span>, sep <span class="op">=</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>, index_col <span class="op">=</span> <span class="dv">0</span>)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Exclude all-zero genes </span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>norm_count <span class="op">=</span> norm_count[norm_count.<span class="bu">sum</span>(<span class="dv">1</span>) <span class="op">&gt;</span> <span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>norm_count <span class="op">=</span> pd.read_csv(<span class="st">"Deseq2_NormalizedCount.txt"</span>, sep <span class="op">=</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>, index_col <span class="op">=</span> <span class="dv">0</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Exclude all-zero genes </span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>norm_count <span class="op">=</span> norm_count[norm_count.<span class="bu">sum</span>(<span class="dv">1</span>) <span class="op">&gt;</span> <span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="generating-gene-co-expression-network" class="level2" data-number="7.2">
-<h2 data-number="7.2" class="anchored" data-anchor-id="generating-gene-co-expression-network"><span class="header-section-number">7.2</span> Generating Gene Co-Expression Network</h2>
-<div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> coexpression_generation(norm_count,padj_thr<span class="op">=</span><span class="fl">0.05</span>):</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Calculating Correlation..'</span>)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    temp<span class="op">=</span>spearmanr(norm_count.T)</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    corr<span class="op">=</span>pd.DataFrame(temp[<span class="dv">0</span>],columns<span class="op">=</span><span class="bu">list</span>(norm_count.index),index<span class="op">=</span><span class="bu">list</span>(norm_count.index))</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    pval<span class="op">=</span>pd.DataFrame(temp[<span class="dv">1</span>],columns<span class="op">=</span><span class="bu">list</span>(norm_count.index),index<span class="op">=</span><span class="bu">list</span>(norm_count.index))</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Filtering the matrix Correlation..'</span>)</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    corr<span class="op">=</span>corr.where(np.triu(np.ones(corr.shape)).astype(np.<span class="bu">bool</span>))</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    pval<span class="op">=</span>pval.where(np.triu(np.ones(pval.shape)).astype(np.<span class="bu">bool</span>))</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Making long table of Correlation..'</span>)</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    corr2<span class="op">=</span>corr.unstack().reset_index(name<span class="op">=</span><span class="st">'weight'</span>)</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    pval2<span class="op">=</span>pval.unstack().reset_index(name<span class="op">=</span><span class="st">'pval'</span>)</span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    res<span class="op">=</span>corr2.merge(pval2,on<span class="op">=</span>[<span class="st">'level_0'</span>,<span class="st">'level_1'</span>])</span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    res<span class="op">=</span>res[res[<span class="st">'level_0'</span>] <span class="op">!=</span> res[<span class="st">'level_1'</span>]]</span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    res<span class="op">=</span>res.dropna()</span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Adjusting P-val'</span>)</span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>    res[<span class="st">'padj'</span>]<span class="op">=</span>multipletests(res[<span class="st">'pval'</span>],method<span class="op">=</span><span class="st">'fdr_bh'</span>)[<span class="dv">1</span>]</span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>    res<span class="op">=</span>res[res.padj <span class="op">&lt;</span> padj_thr].reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>    res<span class="op">=</span>res[[<span class="st">'level_0'</span>,<span class="st">'level_1'</span>,<span class="st">'weight'</span>]]</span>
-<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Done!!'</span>)</span>
-<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> res</span>
-<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>coexp_network <span class="op">=</span> coexpression_generation(norm_count)</span>
-<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>coexp_network <span class="op">=</span> coexp_network[coexp_network[<span class="st">"weight"</span>] <span class="op">&gt;</span> <span class="dv">0</span>]</span>
-<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>coexp_network.to_csv(<span class="st">"coexpression_network.txt"</span>, sep <span class="op">=</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>, index <span class="op">=</span> <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="generating-gene-co-expression-network" class="level2">
+<h2 class="anchored" data-anchor-id="generating-gene-co-expression-network">Generating Gene Co-Expression Network</h2>
+<div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> coexpression_generation(norm_count,padj_thr<span class="op">=</span><span class="fl">0.05</span>):</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Calculating Correlation..'</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    temp<span class="op">=</span>spearmanr(norm_count.T)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    corr<span class="op">=</span>pd.DataFrame(temp[<span class="dv">0</span>],columns<span class="op">=</span><span class="bu">list</span>(norm_count.index),index<span class="op">=</span><span class="bu">list</span>(norm_count.index))</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    pval<span class="op">=</span>pd.DataFrame(temp[<span class="dv">1</span>],columns<span class="op">=</span><span class="bu">list</span>(norm_count.index),index<span class="op">=</span><span class="bu">list</span>(norm_count.index))</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Filtering the matrix Correlation..'</span>)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    corr<span class="op">=</span>corr.where(np.triu(np.ones(corr.shape)).astype(np.<span class="bu">bool</span>))</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    pval<span class="op">=</span>pval.where(np.triu(np.ones(pval.shape)).astype(np.<span class="bu">bool</span>))</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Making long table of Correlation..'</span>)</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    corr2<span class="op">=</span>corr.unstack().reset_index(name<span class="op">=</span><span class="st">'weight'</span>)</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    pval2<span class="op">=</span>pval.unstack().reset_index(name<span class="op">=</span><span class="st">'pval'</span>)</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    res<span class="op">=</span>corr2.merge(pval2,on<span class="op">=</span>[<span class="st">'level_0'</span>,<span class="st">'level_1'</span>])</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>    res<span class="op">=</span>res[res[<span class="st">'level_0'</span>] <span class="op">!=</span> res[<span class="st">'level_1'</span>]]</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>    res<span class="op">=</span>res.dropna()</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Adjusting P-val'</span>)</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>    res[<span class="st">'padj'</span>]<span class="op">=</span>multipletests(res[<span class="st">'pval'</span>],method<span class="op">=</span><span class="st">'fdr_bh'</span>)[<span class="dv">1</span>]</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>    res<span class="op">=</span>res[res.padj <span class="op">&lt;</span> padj_thr].reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>    res<span class="op">=</span>res[[<span class="st">'level_0'</span>,<span class="st">'level_1'</span>,<span class="st">'weight'</span>]]</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Done!!'</span>)</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> res</span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>coexp_network <span class="op">=</span> coexpression_generation(norm_count)</span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>coexp_network <span class="op">=</span> coexp_network[coexp_network[<span class="st">"weight"</span>] <span class="op">&gt;</span> <span class="dv">0</span>]</span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>coexp_network.to_csv(<span class="st">"coexpression_network.txt"</span>, sep <span class="op">=</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>, index <span class="op">=</span> <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Map to gene names (optional):</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Starting connections to ensembl website using the "Dataset" function from pyBioMart</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>dataset <span class="op">=</span> Dataset(name<span class="op">=</span><span class="st">'hsapiens_gene_ensembl'</span>, host<span class="op">=</span><span class="st">'http://www.ensembl.org'</span>)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Retrieving name mapping dataframe between "Esembl ID" and External Gene Name (HGNC) and focusing only on "protein coding" genes</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>mapping <span class="op">=</span> dataset.query(attributes<span class="op">=</span>[<span class="st">'ensembl_gene_id'</span>, <span class="st">'external_gene_name'</span>])</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>coexp_network.replace(mapping.set_index(<span class="st">"Gene stable ID"</span>)[<span class="st">"Gene name"</span>]).dropna().to_csv(<span class="st">"coexpression_network.txt"</span>, sep <span class="op">=</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>, index <span class="op">=</span> <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Starting connections to ensembl website using the "Dataset" function from pyBioMart</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>dataset <span class="op">=</span> Dataset(name<span class="op">=</span><span class="st">'hsapiens_gene_ensembl'</span>, host<span class="op">=</span><span class="st">'http://www.ensembl.org'</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Retrieving name mapping dataframe between "Esembl ID" and External Gene Name (HGNC) and focusing only on "protein coding" genes</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>mapping <span class="op">=</span> dataset.query(attributes<span class="op">=</span>[<span class="st">'ensembl_gene_id'</span>, <span class="st">'external_gene_name'</span>])</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>coexp_network.replace(mapping.set_index(<span class="st">"Gene stable ID"</span>)[<span class="st">"Gene name"</span>]).dropna().to_csv(<span class="st">"coexpression_network.txt"</span>, sep <span class="op">=</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>, index <span class="op">=</span> <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -757,19 +861,76 @@ Note
 </ul>
 </div>
 </div>
+</section>
+</div>
+</div>
+</div>
 <hr>
-</section>
-</section>
-<section id="things-to-append-to-your-submission" class="level1" data-number="8">
-<h1 data-number="8"><span class="header-section-number">8</span> Things to append to your submission</h1>
-<ul>
-<li>Save your notebook as PRACTICAL_NETWORK_ANALYSIS_yourname.ipynb</li>
-<li>Add answers to the questions in separate markdown cells</li>
-<li>Add your code blocks from the jupyter notebook with completed code where the placeholders were</li>
-<li>Include some output cells with figures (if multiple runs are needed, keep only the last one)</li>
-</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Code Solutions
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>degree_centrality <span class="op">=</span> g.degree()</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>betweenness_centrality <span class="op">=</span> g.betweenness()</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>closeness_centrality <span class="op">=</span> g.closeness()</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>eigenvector_centrality <span class="op">=</span> g.eigenvector_centrality()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>top40_betweenness <span class="op">=</span> centrality_df.sort_values(<span class="st">"betweenness"</span>, ascending <span class="op">=</span> <span class="va">False</span>).iloc[<span class="dv">0</span>:<span class="dv">50</span>]</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>top40_closeness <span class="op">=</span> centrality_df.sort_values(<span class="st">"closeness"</span>, ascending <span class="op">=</span> <span class="va">False</span>).iloc[<span class="dv">0</span>:<span class="dv">50</span>]</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>top40_eigenvector <span class="op">=</span> centrality_df.sort_values(<span class="st">"eigenvector"</span>, ascending <span class="op">=</span> <span class="va">False</span>).iloc[<span class="dv">0</span>:<span class="dv">50</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(cluster)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>memberships.value_counts()</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>emberships.reindex(top40_degree.index).value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>largest_cluster <span class="op">=</span> memberships[memberships <span class="op">==</span> <span class="dv">4</span>] <span class="co">#it was cluster 4 in my case</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>enr <span class="op">=</span> gp.enrichr(gene_list<span class="op">=</span>largest_cluster.index.tolist(), <span class="co"># or "./tests/data/gene_list.txt",</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>                 gene_sets<span class="op">=</span><span class="st">'GO_Biological_Process_2025'</span>,</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>                 organism<span class="op">=</span><span class="st">'human'</span>, <span class="co"># don't forget to set organism to the one you desired! e.g. Yeast</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>                 outdir<span class="op">=</span><span class="va">None</span>, <span class="co"># don't write to disk</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>                )</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> gp.dotplot(enr.res2d, title<span class="op">=</span><span class="st">'GO BP'</span>,cmap<span class="op">=</span><span class="st">'viridis_r'</span>, size<span class="op">=</span><span class="dv">10</span>, figsize<span class="op">=</span>(<span class="dv">3</span>,<span class="dv">5</span>), cutoff<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>subgraph <span class="op">=</span> g.subgraph(largest_cluster.index)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate centrality measures</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>degree_centrality <span class="op">=</span> subgraph.degree()</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>betweenness_centrality <span class="op">=</span> subgraph.betweenness()</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>closeness_centrality <span class="op">=</span> subgraph.closeness()</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>eigenvector_centrality <span class="op">=</span> subgraph.eigenvector_centrality()</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Add centrality values as node attributes</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>subgraph.vs[<span class="st">"degree"</span>] <span class="op">=</span> degree_centrality</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>subgraph.vs[<span class="st">"betweenness"</span>] <span class="op">=</span> betweenness_centrality</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>subgraph.vs[<span class="st">"closeness"</span>] <span class="op">=</span> closeness_centrality</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>subgraph.vs[<span class="st">"eigenvector"</span>] <span class="op">=</span> eigenvector_centrality</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a DF to present different centrality analysess</span></span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>centrality_df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"degree"</span>: degree_centrality,</span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"betweenness"</span>: betweenness_centrality,</span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">"closeness"</span>: closeness_centrality,</span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"eigenvector"</span>: eigenvector_centrality</span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>}, index <span class="op">=</span> subgraph.vs[<span class="st">"name"</span>])</span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a>subgraph_top40_degree <span class="op">=</span> centrality_df.sort_values(<span class="st">"degree"</span>, ascending <span class="op">=</span> <span class="va">False</span>).iloc[<span class="dv">0</span>:<span class="dv">50</span>]</span>
+<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a>subgraph_top40_betweenness <span class="op">=</span> centrality_df.sort_values(<span class="st">"betweenness"</span>, ascending <span class="op">=</span> <span class="va">False</span>).iloc[<span class="dv">0</span>:<span class="dv">50</span>]</span>
+<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a>subgraph_top40_closeness <span class="op">=</span> centrality_df.sort_values(<span class="st">"closeness"</span>, ascending <span class="op">=</span> <span class="va">False</span>).iloc[<span class="dv">0</span>:<span class="dv">50</span>]</span>
+<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a>subgraph_top40_eigenvector <span class="op">=</span> centrality_df.sort_values(<span class="st">"eigenvector"</span>, ascending <span class="op">=</span> <span class="va">False</span>).iloc[<span class="dv">0</span>:<span class="dv">50</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

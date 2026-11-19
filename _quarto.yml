@@ -18,7 +18,7 @@ website:
           - text: "Advanced PCA & Correlation"
             href: "practicals/PRACTICALS-DESeq/PRACTICAL_DESEQ_ADVANCED.qmd"
           - text: "Network Analysis"
-            href: "practicals/PRACTICALS-Network_Visualisation/_PRACTICAL_NETWORK_ANALYSIS.qmd"
+            href: "practicals/PRACTICALS-Network_Visualisation/PRACTICAL_NETWORK_ANALYSIS.qmd"
       - text: "Structure & Modeling"
         menu:
           - text: "Protein Complex Structure Analysis"

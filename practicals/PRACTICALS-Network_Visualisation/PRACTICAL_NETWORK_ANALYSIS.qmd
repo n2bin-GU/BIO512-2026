@@ -7,7 +7,7 @@ format:
   html:
     toc: true
     toc-depth: 3
-    number-sections: true
+    number-sections: false
     code-fold: false
     theme:
       light: cosmo
@@ -25,11 +25,11 @@ mkdir -p ~/BIO512/Network_analysis
 cd ~/BIO512/Network_analysis
 
 # Required files can be fetched from the Cluster
-scp -r <your_vera_username>@vera2.chalmers.se:/cephyr/NOBACKUP/groups/n2bin_gu/BIO512/Network_analysis/* ~/BIO512/Network_analysis/
+scp -r <your_vera_username>@vera2.chalmers.se:/cephyr/NOBACKUP/groups/n2bin_gu/BIO512_2026/Network/* ~/BIO512/Network_analysis/
 
 # Remember to activate the conda environment
 conda activate BIO512_v1
-# Launch Jupyter Lab or run the notebook in VScode
+# Launch Jupyter Lab or run a notebook in VScode
 
 # For any excersise that has a {__}, this is a placeholder that you need to fill in with appropriate code.
 myvariable = {__}
@@ -37,6 +37,61 @@ myvariable = {__}
 myvariable = "Hello, World!"
 ```
 :::
+
+## Library Imports
+```python
+%matplotlib inline
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+
+import seaborn as sns
+import matplotlib
+# Adding these 4 lines will make our life easier if we need 
+# to do figure post-processing in other software
+sns.set(font="Arial")
+sns.set_style("white")
+matplotlib.rcParams['pdf.fonttype'] = 42
+matplotlib.rcParams['ps.fonttype'] = 42
+
+from pydeseq2.dds import DeseqDataSet
+from pydeseq2.default_inference import DefaultInference
+from pydeseq2.ds import DeseqStats
+from statsmodels.sandbox.stats.multicomp import multipletests
+
+from pca import pca
+from pybiomart import Dataset
+
+from sklearn.decomposition import PCA as sklearnPCA
+import os, math
+os.environ['KMP_DUPLICATE_LIB_OK']='True'
+import pickle
+
+from scipy.stats import zscore, spearmanr
+import gseapy as gp
+import igraph as ig
+
+def coexpression_generation(norm_count,padj_thr=0.05):
+        print('Calculating Correlation..')
+        temp=spearmanr(norm_count.T)
+        corr=pd.DataFrame(temp[0],columns=list(norm_count.index),index=list(norm_count.index))
+        pval=pd.DataFrame(temp[1],columns=list(norm_count.index),index=list(norm_count.index))
+        print('Filtering the matrix Correlation..')
+        corr=corr.where(np.triu(np.ones(corr.shape)).astype(np.bool))
+        pval=pval.where(np.triu(np.ones(pval.shape)).astype(np.bool))
+        print('Making long table of Correlation..')
+        corr2=corr.unstack().reset_index(name='weight')
+        pval2=pval.unstack().reset_index(name='pval')
+        res=corr2.merge(pval2,on=['level_0','level_1'])
+        res=res[res['level_0'] != res['level_1']]
+        res=res.dropna()
+        print('Adjusting P-val')
+        res['padj']=multipletests(res['pval'],method='fdr_bh')[1]
+        res=res[res.padj < padj_thr].reset_index(drop=True)
+        res=res[['level_0','level_1','weight']]
+        print('Done!!')
+        return res
+```
 
 ---
 
@@ -66,8 +121,9 @@ g = ig.Graph.TupleList(zip(coexp_network['level_0'],coexp_network['level_1']))
 ::: {.callout-note}
 Network can be visualized using the iGraph built-in functions. In order to make a neat layout, we can select different layout options.
 
-In this lab, we let igraph deciding the most suitable layout (auto), but there are many other options Read below:
+In this lab, we let igraph decide the most suitable layout (auto), but there are many other options Read below:
 https://igraph.org/python/tutorial/0.9.6/visualisation.html
+
 :::
 
 ```python
@@ -83,10 +139,12 @@ ig.plot(
 fig.set_size_inches(20, 20) # defining the size of the canvas
 ```
 
+::: {.callout-tip}
 ## Questions
 
 - **Q1: How many nodes and edges?**
 - **Q2: Network diameter and density? Interpret their meaning.**
+:::
 
 ```python
 g.vcount()
@@ -116,6 +174,7 @@ Different measures capture different aspects of "importance":
 
 Read iGraph Python manual https://python.igraph.org/en/stable/
 
+::: {.callout-tip}
 ## Questions
 
 ::: {.callout-tip}
@@ -128,9 +187,11 @@ Hint 2: Use the Pandas sort_values function to rank the Series https://pandas.py
 - **Q4: Which genes act as bridges between modules (high betweenness)? (top 10)**  
 - **Q5: Perform Closeness and Eigenvector centrality analysis. Looking at top 40 most central genes for each measurement, is there any intersection between different methods? Which methods are more similar? Why?**  
 - **Q6: Compare biological functions of hub vs. bridge genes — do they play different roles? (Hint: Use the Enrichr website or GSEAPY module from DESeq2 lab to identify their functions) https://maayanlab.cloud/Enrichr/**
+:::
 
 ```python
 # Calculate centrality measures
+# HINT: You use igraph functions for this, like with g.vcount(). 
 degree_centrality = {__}
 betweenness_centrality = {__}
 closeness_centrality = {__}
@@ -150,8 +211,14 @@ centrality_df = pd.DataFrame({
     "closeness": closeness_centrality,
     "eigenvector": eigenvector_centrality
 })
+
+top40_degree = centrality_df.sort_values("degree", ascending = False).iloc[0:50]
+top40_betweenness = {__}
+top40_closeness = {__}
+top40_eigenvector = {__}
 ```
 
+::: {.callout-note}
 ## Optional: Advance Plotting: Use centrality variables as the node size
 
 ```python
@@ -165,6 +232,7 @@ ig.plot(
 
 fig.set_size_inches(20, 20) # defining the size of the canvas
 ```
+:::
 
 ---
 
@@ -209,17 +277,42 @@ https://pandas.pydata.org/docs/reference/api/pandas.Series.value_counts.html
 memberships = pd.Series(clustering.membership, index = g.vs["name"])
 
 memberships.head()
-
-cluster_sizes = {__}
-cluster_sizes.head()
 ```
 
+::: {.callout-tip}
 ## Questions to Explore
 
 - **Q7: How many modules/clusters can you detect in the network?**
 - **Q8: Which module is the largest? Which is the smallest?**
 - **Q9: Which modules contain the most hub genes identified earlier?**
 - **Q10: If you pick the largest module, what biological function might it represent? Make a visualization of top 10 most enriched processes** 
+:::
+
+```python
+len({__})
+```
+
+```python
+memberships.{__}
+```
+
+```python
+memberships.{__}.value_counts()
+```
+
+```python
+# Hint for Q10
+largest_cluster = memberships[memberships == 4] #it was cluster 4 in my case
+
+enr = gp.enrichr(gene_list=largest_cluster.index.tolist(), # or "./tests/data/gene_list.txt",
+                 {__},
+                 {__},
+                 {__}
+                 )
+
+
+ax = gp.dotplot(enr.res2d, title='GO BP',cmap='viridis_r', size=10, figsize=(3,5), cutoff=1)
+```
 
 ::: {.callout-tip}
 Use the Enrichr website or GSEAPY module from DESeq2 lab to identify their functions: https://maayanlab.cloud/Enrichr/**
@@ -254,7 +347,9 @@ fig.set_size_inches(20, 20)
 
 ---
 
+::: {.callout-note collapse="true"}
 # Additional instructions for network construction (if you have time)
+
 If you want to generate the co-expression network yourself, follow these steps (add into new code cells in the notebook):
 
 ## Load normalized count file
@@ -316,12 +411,73 @@ The output is a dataframe with 3 columns:
 - weight: correlation score
 :::
 
+:::
 ---
 
-# Things to append to your submission
+::: {.callout-tip collapse="true"}
+## Code Solutions
 
-- Save your notebook as PRACTICAL_NETWORK_ANALYSIS_yourname.ipynb
-- Add answers to the questions in separate markdown cells
-- Add your code blocks from the jupyter notebook with completed code where the placeholders were 
-- Include some output cells with figures (if multiple runs are needed, keep only the last one)
+```python
+degree_centrality = g.degree()
+betweenness_centrality = g.betweenness()
+closeness_centrality = g.closeness()
+eigenvector_centrality = g.eigenvector_centrality()
+```
+
+```python
+top40_betweenness = centrality_df.sort_values("betweenness", ascending = False).iloc[0:50]
+top40_closeness = centrality_df.sort_values("closeness", ascending = False).iloc[0:50]
+top40_eigenvector = centrality_df.sort_values("eigenvector", ascending = False).iloc[0:50]
+```
+
+```python 
+len(cluster)
+
+memberships.value_counts()
+
+emberships.reindex(top40_degree.index).value_counts()
+```
+
+```python
+largest_cluster = memberships[memberships == 4] #it was cluster 4 in my case
+
+enr = gp.enrichr(gene_list=largest_cluster.index.tolist(), # or "./tests/data/gene_list.txt",
+                 gene_sets='GO_Biological_Process_2025',
+                 organism='human', # don't forget to set organism to the one you desired! e.g. Yeast
+                 outdir=None, # don't write to disk
+                )
+
+ax = gp.dotplot(enr.res2d, title='GO BP',cmap='viridis_r', size=10, figsize=(3,5), cutoff=1)
+```
+
+```python
+subgraph = g.subgraph(largest_cluster.index)
+
+# Calculate centrality measures
+degree_centrality = subgraph.degree()
+betweenness_centrality = subgraph.betweenness()
+closeness_centrality = subgraph.closeness()
+eigenvector_centrality = subgraph.eigenvector_centrality()
+
+# Add centrality values as node attributes
+subgraph.vs["degree"] = degree_centrality
+subgraph.vs["betweenness"] = betweenness_centrality
+subgraph.vs["closeness"] = closeness_centrality
+subgraph.vs["eigenvector"] = eigenvector_centrality
+
+# Create a DF to present different centrality analysess
+centrality_df = pd.DataFrame({
+    "degree": degree_centrality,
+    "betweenness": betweenness_centrality,
+    "closeness": closeness_centrality,
+    "eigenvector": eigenvector_centrality
+}, index = subgraph.vs["name"])
+
+subgraph_top40_degree = centrality_df.sort_values("degree", ascending = False).iloc[0:50]
+subgraph_top40_betweenness = centrality_df.sort_values("betweenness", ascending = False).iloc[0:50]
+subgraph_top40_closeness = centrality_df.sort_values("closeness", ascending = False).iloc[0:50]
+subgraph_top40_eigenvector = centrality_df.sort_values("eigenvector", ascending = False).iloc[0:50]
+```
+
+:::
 
