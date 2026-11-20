@@ -25,7 +25,7 @@ mkdir -p ~/BIO512/Network_analysis
 cd ~/BIO512/Network_analysis
 
 # Required files can be fetched from the Cluster
-scp -r <your_vera_username>@vera2.chalmers.se:/cephyr/NOBACKUP/groups/n2bin_gu/BIO512_2026/Network/* ~/BIO512/Network_analysis/
+scp -r <your_vera_username>@vera2.c3se.chalmers.se:/cephyr/NOBACKUP/groups/n2bin_gu/BIO512_2026/Network/* ~/BIO512/Network_analysis/
 
 # Remember to activate the conda environment
 conda activate BIO512_v1
