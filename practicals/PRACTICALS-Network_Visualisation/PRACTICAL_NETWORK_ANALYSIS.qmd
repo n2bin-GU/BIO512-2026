@@ -57,7 +57,7 @@ matplotlib.rcParams['ps.fonttype'] = 42
 from pydeseq2.dds import DeseqDataSet
 from pydeseq2.default_inference import DefaultInference
 from pydeseq2.ds import DeseqStats
-from statsmodels.sandbox.stats.multicomp import multipletests
+from statsmodels.stats.multitest import multipletests
 
 from pca import pca
 from pybiomart import Dataset
